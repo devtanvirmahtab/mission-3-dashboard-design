@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>সুন্দরবন অর্গানিক – অ্যাডমিন ড্যাশবোর্ড</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f6f4;--surface:#fff;--ink:#1b2420;--muted:#6b7670;--line:#e6e9e6;--brand:#1f6b4f;--brand-soft:#e3f1ea;--ok:#1f7a4d;--ok-bg:#e1f3e8;--warn:#9a6700;--warn-bg:#fff1cc;--bad:#b42318;--bad-bg:#fde7e4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101513;--surface:#18201c;--ink:#e8eee9;--muted:#93a09a;--line:#27322d;--brand:#4cc38a;--brand-soft:#1d3a2d;--ok:#6fd8a0;--ok-bg:#1b3a2a;--warn:#f0c04a;--warn-bg:#3b3013;--bad:#ff8a7d;--bad-bg:#3d1f1c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101513;--surface:#18201c;--ink:#e8eee9;--muted:#93a09a;--line:#27322d;--brand:#4cc38a;--brand-soft:#1d3a2d;--ok:#6fd8a0;--ok-bg:#1b3a2a;--warn:#f0c04a;--warn-bg:#3b3013;--bad:#ff8a7d;--bad-bg:#3d1f1c;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:'Hind Siliguri','Noto Sans Bengali','Segoe UI',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+.side{background:var(--surface);border-right:1px solid var(--line);padding:24px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:28px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;padding:0 8px}
+.logo i{width:34px;height:34px;border-radius:10px;background:var(--brand);color:#fff;display:grid;place-items:center;font-style:normal}
+nav{display:flex;flex-direction:column;gap:4px}
+nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--muted);text-decoration:none;font-weight:500}
+nav a:hover{background:var(--bg);color:var(--ink)}
+nav a.on{background:var(--brand-soft);color:var(--brand);font-weight:600}
+nav svg,.ic{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.side-foot{margin-top:auto;font-size:13px;color:var(--muted);background:var(--bg);padding:14px;border-radius:12px}
+.main{min-width:0}
+.top{display:flex;align-items:center;gap:12px;padding:16px 32px;background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.iconbtn{width:40px;height:40px;border:1px solid var(--line);background:var(--surface);border-radius:10px;display:grid;place-items:center;cursor:pointer;position:relative;flex:none}
+.iconbtn:hover{background:var(--bg)}
+.menu{display:none}
+.search{flex:1;max-width:420px;display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:0 12px;height:40px;color:var(--muted)}
+.search input{border:0;background:none;outline:0;width:100%;height:100%}
+.dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--bad);border:2px solid var(--surface)}
+.spacer{flex:1}
+.me{display:flex;align-items:center;gap:10px}
+.av{width:38px;height:38px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:600}
+.me b{display:block;font-size:14px;line-height:1.2}.me small{color:var(--muted);font-size:12px}
+.wrap{padding:28px 32px 40px;display:flex;flex-direction:column;gap:24px;max-width:1280px}
+.head h1{font-size:24px;font-weight:700;line-height:1.3}.head p{color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.stat{display:flex;flex-direction:column;gap:6px}
+.stat .row{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px}
+.stat .ico{width:38px;height:38px;border-radius:10px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center}
+.stat strong{font-size:28px;font-weight:700;line-height:1.2}
+.delta{font-size:13px;font-weight:600}.up{color:var(--ok)}.down{color:var(--bad)}.delta span{color:var(--muted);font-weight:400}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+.card h2{font-size:17px;font-weight:600}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:8px}
+.ch small{color:var(--muted)}
+.chart{display:flex;align-items:flex-end;gap:14px;height:230px;padding-top:10px;border-bottom:1px solid var(--line);position:relative}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px}
+.bar{width:100%;max-width:46px;background:var(--brand-soft);border-radius:8px 8px 0 0;transition:background .2s;position:relative;cursor:default}
+.col:hover .bar,.col.today .bar{background:var(--brand)}
+.col .v{font-size:12px;color:var(--muted);opacity:0;transition:opacity .2s}
+.col:hover .v,.col.today .v{opacity:1}
+.days{display:flex;gap:14px;padding-top:8px;color:var(--muted);font-size:13px}.days span{flex:1;text-align:center}
+.list{list-style:none;padding:0;display:flex;flex-direction:column;gap:16px}
+.list li{display:flex;flex-direction:column;gap:6px}
+.list .l{display:flex;justify-content:space-between;font-weight:500;gap:8px}.list .l small{color:var(--muted);font-weight:400;white-space:nowrap}
+.meter{height:6px;border-radius:99px;background:var(--bg);overflow:hidden}.meter i{display:block;height:100%;border-radius:99px;background:var(--bad)}
+.meter.warn i{background:var(--warn)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th{text-align:left;font-size:13px;color:var(--muted);font-weight:500;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:14px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.id{color:var(--muted)}td.amt{font-weight:600}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:99px;font-size:13px;font-weight:600}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.b-ok{color:var(--ok);background:var(--ok-bg)}.b-warn{color:var(--warn);background:var(--warn-bg)}.b-bad{color:var(--bad);background:var(--bad-bg)}
+.link{color:var(--brand);font-weight:600;font-size:14px;text-decoration:none}
+.scrim{display:none}
+@media(max-width:1080px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:820px){
+.app{grid-template-columns:1fr}
+.side{position:fixed;left:0;top:0;bottom:0;width:260px;z-index:20;transform:translateX(-100%);transition:transform .25s;padding-top:calc(24px + env(safe-area-inset-top,0px))}
+.side.open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.25)}
+.scrim.show{display:block;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:15}
+.menu{display:grid}.top{padding:12px 16px}.wrap{padding:20px 16px 32px}
+.me div{display:none}.search{max-width:none}
+}
+@media(max-width:480px){.stats{grid-template-columns:1fr 1fr;gap:12px}.stat strong{font-size:22px}.card{padding:16px}.chart,.days{gap:8px}.stat .ico{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+[hidden]{display:none!important}
+.bar-t{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.btn{background:var(--brand);color:#fff;border:0;border-radius:10px;padding:9px 18px;font-weight:600;cursor:pointer}.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:7px 14px;border-radius:99px;cursor:pointer;font-weight:500}
+.tab.on{background:var(--brand-soft);color:var(--brand);border-color:transparent;font-weight:600}
+.tab small{margin-left:4px;opacity:.8}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.pc{display:flex;flex-direction:column;gap:10px}
+.tile{height:112px;border-radius:10px;background:var(--brand-soft);display:grid;place-items:center;font-size:42px}
+.pc h3{font-size:15px;font-weight:600;line-height:1.4}.pc small{color:var(--muted)}
+.pc .pr{display:flex;justify-content:space-between;align-items:center}.pc .pr b{font-size:18px}
+.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:14px;font-weight:500}
+.field input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;outline:0;width:100%}.field input:focus{border-color:var(--brand)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sec{display:grid;grid-template-columns:240px 1fr;gap:28px}.sec p{color:var(--muted);font-size:14px}
+.tg{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}.tg:last-child{border:0}.tg small{display:block;color:var(--muted)}
+.sw{appearance:none;-webkit-appearance:none;width:42px;height:24px;border-radius:99px;background:var(--line);position:relative;cursor:pointer;transition:.2s;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw:checked{background:var(--brand)}.sw:checked::after{left:21px}
+.who{display:flex;align-items:center;gap:12px}.who .av{width:36px;height:36px;font-size:14px;background:var(--brand-soft);color:var(--brand)}.who small{color:var(--muted);display:block;line-height:1.2}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.foot{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px;padding-top:14px;flex-wrap:wrap;gap:8px}
+.toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:10px;font-weight:500;z-index:50;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:16px;z-index:40}
+.dlg{background:var(--surface);border:1px solid var(--line);border-radius:16px;width:100%;max-width:480px;padding:24px;display:flex;flex-direction:column;gap:16px;max-height:90vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.dlg h2{font-size:19px}
+.field select{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;outline:0;width:100%}
+.field select:focus{border-color:var(--brand)}
+.err{color:var(--bad);font-size:14px;min-height:20px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.top .search{position:relative}
+.dd{position:absolute;top:46px;left:0;right:0;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.2);max-height:70vh;overflow:auto;padding:6px;z-index:30}
+.dd h4{font-size:12px;color:var(--muted);font-weight:600;padding:8px 10px 4px}
+.hit{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-radius:8px;padding:8px 10px;cursor:pointer;color:inherit}
+.hit:hover,.hit:focus-visible{background:var(--bg)}
+.hit small{display:block;color:var(--muted);line-height:1.3}
+.ht{width:34px;height:34px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;flex:none;font-size:18px}
+.none{padding:18px;text-align:center;color:var(--muted)}
+a.pc{text-decoration:none;color:inherit;transition:border-color .15s}a.pc:hover{border-color:var(--brand)}
+.tile.lg{height:160px;font-size:72px}
+.nrow{display:grid;grid-template-columns:1fr 72px 40px;gap:8px;align-items:center}
+.nrow select,.nrow input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;width:100%;min-width:0;outline:0}
+.nrow input{text-align:center}
+.tile{overflow:hidden}.pc .tile{height:140px}
+.tile img,.av img,.upv img{width:100%;height:100%;object-fit:cover;display:block}
+.tile img{animation:fadein .5s ease both}
+.av{overflow:hidden}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+.pop{animation:pop .45s cubic-bezier(.2,.8,.2,1) both}
+.up{display:flex;gap:16px;align-items:center;padding:14px;border:1.5px dashed var(--line);border-radius:14px;transition:border-color .2s,background .2s}
+.up.drag{border-color:var(--brand);background:var(--brand-soft)}
+.upv{width:96px;height:96px;border-radius:12px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;overflow:hidden;flex:none;font-size:38px}
+.up.round .upv{border-radius:50%}
+.up.big{flex-direction:column;align-items:stretch;text-align:center}.up.big .upv{width:100%;height:210px;font-size:72px}
+.upc{display:flex;flex-direction:column;gap:8px;align-items:flex-start;min-width:0}.up.big .upc{align-items:center}
+.upc small{color:var(--muted);font-size:12.5px}
+.upb{display:inline-block;padding:7px 14px;font-size:14px}
+.upbar{height:6px;width:100%;background:var(--line);border-radius:9px;overflow:hidden}.upbar i{display:block;height:100%;width:0;background:var(--brand);transition:width .5s ease}
+.me{cursor:pointer;border-radius:12px;padding:4px 8px}.me:hover{background:var(--bg)}
+textarea{font:inherit;color:inherit;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;outline:0;width:100%;resize:vertical;min-height:84px}textarea:focus{border-color:var(--brand)}
+a.who{color:inherit;text-decoration:none}a.who:hover div{color:var(--brand)}
+.cg{display:grid;grid-template-columns:minmax(280px,1fr) 2fr;gap:20px;align-items:start}
+.cstack{display:flex;flex-direction:column;gap:20px}
+.cprof{display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center}.cprof .av{width:104px;height:104px;font-size:40px}.cprof h2{font-size:20px}
+.kv{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--line);width:100%;text-align:left}.kv span:first-child{color:var(--muted);flex:none}.kv span:last-child{text-align:right;font-weight:500}
+.mini4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1080px){.cg{grid-template-columns:1fr}.mini4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.up{flex-direction:column;align-items:stretch;text-align:center}.upc{align-items:center}}
+@media(prefers-reduced-motion:reduce){.pop,.tile img{animation:none}}
+.dot{top:-5px;right:-5px;min-width:18px;width:auto;height:18px;border-radius:99px;font-size:11px;font-weight:700;color:#fff;background:var(--bad);display:grid;place-items:center;padding:0 4px;border:2px solid var(--surface);line-height:1}
+#lang{font-size:13px;font-weight:700;width:auto;padding:0 12px}
+.nt{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:16px 12px;cursor:pointer;color:inherit;border-radius:10px}
+.nt:last-child{border-bottom:0}.nt:hover{background:var(--bg)}
+.nt.un{background:var(--brand-soft)}.nt.un .nti{background:var(--surface)}
+.nti{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;flex:none;background:var(--brand-soft)}
+.nti.stock{background:var(--warn-bg)}.nti.pay,.nti.ok{background:var(--ok-bg)}.nti.cancel{background:var(--bad-bg)}
+.ntb{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}.ntb b{font-weight:600}.ntb small{color:var(--muted)}
+.ntd{width:9px;height:9px;border-radius:50%;background:var(--brand);margin-top:6px;flex:none}
+@keyframes flash{0%,55%{background:var(--brand-soft)}100%{background:transparent}}
+tr.flash td{animation:flash 2.6s ease}
+@media(prefers-reduced-motion:reduce){tr.flash td{animation:none;background:var(--brand-soft)}}
+.sl{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}.sl.tot{border:0;font-size:18px;font-weight:700}
+@media(max-width:900px){.sec{grid-template-columns:1fr;gap:14px}.mini{grid-template-columns:1fr}}
+@media(max-width:560px){.form{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side" id="side">
+  <div class="logo"><i>স</i>সুন্দরবন অর্গানিক</div>
+  <nav>
+    <a href="#" class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>ড্যাশবোর্ড</a>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>অর্ডার</a>
+    <a href="#"><svg viewBox="0 0 24 24"><path d="m21 8-9-5-9 5v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg>প্রোডাক্ট</a>
+    <a href="#"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21v-1a6 6 0 0 1 6-6h2a6 6 0 0 1 6 6v1M17 4a4 4 0 0 1 0 8M22 21v-1a6 6 0 0 0-4-5.6"/></svg>কাস্টমার</a>
+    <a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5h0a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>সেটিংস</a>
+  </nav>
+  <div class="side-foot">খুলনা শাখা<br>সকাল ৯টা – রাত ৯টা</div>
+</aside>
+<div class="scrim" id="scrim"></div>
+
+<div class="main">
+<header class="top">
+  <button class="iconbtn menu" id="menu" aria-label="মেনু খুলুন"><svg class="ic" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  <label class="search"><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="অর্ডার, প্রোডাক্ট বা কাস্টমার খুঁজুন"></label>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="theme" aria-label="ডার্ক মোড বদলান"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  <button class="iconbtn" aria-label="নোটিফিকেশন"><svg class="ic" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot"></span></button>
+  <div class="me"><span class="av">র</span><div><b>রাকিব হাসান</b><small>মালিক</small></div></div>
+</header>
+
+<main class="wrap" id="view-dashboard">
+  <div class="head"><h1>শুভ সকাল, রাকিব 👋</h1><p>বৃহস্পতিবার, ২৬ নভেম্বর ২০২৬ – আজ দোকানের অবস্থা এক নজরে</p></div>
+  <section class="stats" id="stats"></section>
+  <section class="grid">
+    <div class="card">
+      <div class="ch"><div><h2>সপ্তাহের বিক্রি</h2><small>গত ৭ দিনে মোট ৳<span id="wk"></span></small></div><span class="badge b-ok">গত সপ্তাহের চেয়ে ১২% বেশি</span></div>
+      <div class="chart" id="chart"></div><div class="days" id="days"></div>
+    </div>
+    <div class="card">
+      <div class="ch"><h2>স্টক কমে যাচ্ছে</h2><a href="#" class="link">সব দেখুন</a></div>
+      <ul class="list" id="low"></ul>
+    </div>
+  </section>
+  <section class="grid">
+    <div class="card">
+      <div class="ch"><h2>সাম্প্রতিক অর্ডার</h2><a href="#" class="link">সব অর্ডার</a></div>
+      <div class="tw"><table><thead><tr><th>অর্ডার</th><th>কাস্টমার</th><th>প্রোডাক্ট</th><th>তারিখ</th><th>টাকা</th><th>স্ট্যাটাস</th></tr></thead><tbody id="orders"></tbody></table></div>
+    </div>
+    <div class="card">
+      <div class="ch"><h2>সবচেয়ে বেশি বিক্রি</h2><small>এই সপ্তাহ</small></div>
+      <ul class="list" id="top"></ul>
+    </div>
+  </section>
+</main>
+</div>
+</div>
+<script>
+const bn=n=>n.toLocaleString('bn-BD');
+const stats=[
+ ['আজকের বিক্রি','৳'+bn(48520),'+১৮%',1,'<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>'],
+ ['মোট অর্ডার',bn(86),'+৯%',1,'<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18"/>'],
+ ['নতুন কাস্টমার',bn(14),'+৩%',1,'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M19 8v6M22 11h-6"/>'],
+ ['পেন্ডিং অর্ডার',bn(12),'−২',0,'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>']];
+document.getElementById('stats').innerHTML=stats.map(s=>`<div class="card stat"><div class="row">${s[0]}<span class="ico"><svg class="ic" viewBox="0 0 24 24">${s[4]}</svg></span></div><strong>${s[1]}</strong><div class="delta ${s[3]?'up':'down'}">${s[2]} <span>গতকালের তুলনায়</span></div></div>`).join('');
+
+const week=[['শুক্র',29400],['শনি',33800],['রবি',38200],['সোম',31500],['মঙ্গল',42100],['বুধ',44900],['বৃহ',48520]];
+const max=Math.max(...week.map(w=>w[1]));
+document.getElementById('wk').textContent=bn(week.reduce((a,w)=>a+w[1],0));
+document.getElementById('chart').innerHTML=week.map((w,i)=>`<div class="col ${i==6?'today':''}"><span class="v">৳${bn(w[1])}</span><div class="bar" style="height:${w[1]/max*82}%" title="${w[0]}: ৳${bn(w[1])}"></div></div>`).join('');
+document.getElementById('days').innerHTML=week.map(w=>`<span>${w[0]}</span>`).join('');
+
+const low=[['খাঁটি সুন্দরবনের মধু (৫০০গ্রাম)',3,20],['ঘানিভাঙা সরিষার তেল (২ লিটার)',7,30],['গাওয়া ঘি (২৫০গ্রাম)',9,25],['হিমসাগর আম আচার',14,30]];
+document.getElementById('low').innerHTML=low.map(l=>`<li><div class="l">${l[0]}<small>${bn(l[1])}টি বাকি</small></div><div class="meter ${l[1]>10?'warn':''}"><i style="width:${l[1]/l[2]*100}%"></i></div></li>`).join('');
+
+const O=[['#১০৪২৮','তাহমিনা আক্তার','মধু ×২, ঘি ×১','২৬ নভেম্বর',2150,'d'],['#১০৪২৭','মোঃ সোহেল রানা','সরিষার তেল ×৩','২৬ নভেম্বর',1560,'p'],['#১০৪২৬','ফারজানা ইয়াসমিন','খেজুরের গুড় ×৫','২৬ নভেম্বর',1250,'d'],['#১০৪২৫','আরিফুল ইসলাম','মধু ×১, আচার ×২','২৫ নভেম্বর',1180,'c'],['#১০৪২৪','নুসরাত জাহান','গাওয়া ঘি ×২','২৫ নভেম্বর',1900,'d'],['#১০৪২৩','শাহরিয়ার কবির','চিতই পিঠার গুঁড়া ×৪','২৫ নভেম্বর',720,'p']];
+const S={d:['ডেলিভারড','b-ok'],p:['পেন্ডিং','b-warn'],c:['বাতিল','b-bad']};
+document.getElementById('orders').innerHTML=O.map(o=>`<tr><td class="id">${o[0]}</td><td>${o[1]}</td><td>${o[2]}</td><td>${o[3]}</td><td class="amt">৳${bn(o[4])}</td><td><span class="badge ${S[o[5]][1]}">${S[o[5]][0]}</span></td></tr>`).join('');
+
+const T=[['সুন্দরবনের খাঁটি মধু',42,3500],['খেজুরের পাটালি গুড়',36,2800],['গাওয়া ঘি',28,4200],['ঘানিভাঙা সরিষার তেল',24,3600]];
+document.getElementById('top').innerHTML=T.map(t=>`<li><div class="l">${t[0]}<small>${bn(t[1])}টি বিক্রি</small></div><div class="meter"><i style="width:${t[1]/42*100}%;background:var(--brand)"></i></div></li>`).join('');
+
+const side=document.getElementById('side'),scrim=document.getElementById('scrim');
+const tog=o=>{side.classList.toggle('open',o);scrim.classList.toggle('show',o)};
+document.getElementById('menu').onclick=()=>tog(true);scrim.onclick=()=>tog(false);
+document.getElementById('theme').onclick=()=>{const r=document.documentElement;const dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=dark?'light':'dark'};
+
+const $=id=>document.getElementById(id);
+const V=['dashboard','orders','products','customers','settings'];
+const T2={dashboard:'ড্যাশবোর্ড',orders:'অর্ডার',products:'প্রোডাক্ট',customers:'কাস্টমার',settings:'সেটিংস'};
+const navs=[...document.querySelectorAll('nav a')];navs.forEach((a,i)=>a.href='#'+V[i]);
+V.slice(1).forEach(v=>{const m=document.createElement('main');m.className='wrap';m.id='view-'+v;m.hidden=true;document.querySelector('.main').appendChild(m)});
+let tt;const toast=m=>{document.querySelector('.toast')?.remove();const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);clearTimeout(tt);tt=setTimeout(()=>t.remove(),2200)};
+const hd=(t,p,b)=>`<div class="bar-t"><div class="head"><h1>${t}</h1><p>${p}</p></div>${b||''}</div>`;
+const addBtn=l=>`<button class="btn" data-toast="এই বাটনের ফর্ম পরের ধাপে যোগ হবে">+ ${l}</button>`;
+const tabs=(arr,cur,cnt)=>`<div class="tabs">${arr.map(a=>`<button class="tab ${a[0]==cur?'on':''}" data-k="${a[0]}">${a[1]}${cnt?`<small>${bn(cnt(a[0]))}</small>`:''}</button>`).join('')}</div>`;
+const srch=(id,ph)=>`<label class="search" style="max-width:300px"><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input id="${id}" type="search" placeholder="${ph}"></label>`;
+
+/* Orders */
+const OL=[['#১০৪২৮','তাহমিনা আক্তার','মধু ×২, ঘি ×১','২৬ নভেম্বর',2150,'d','বিকাশ'],['#১০৪২৭','মোঃ সোহেল রানা','সরিষার তেল ×৩','২৬ নভেম্বর',1560,'p','ক্যাশ অন ডেলিভারি'],['#১০৪২৬','ফারজানা ইয়াসমিন','খেজুরের গুড় ×৫','২৬ নভেম্বর',1250,'d','নগদ'],['#১০৪২৫','আরিফুল ইসলাম','মধু ×১, আচার ×২','২৫ নভেম্বর',1180,'c','বিকাশ'],['#১০৪২৪','নুসরাত জাহান','গাওয়া ঘি ×২','২৫ নভেম্বর',1900,'d','বিকাশ'],['#১০৪২৩','শাহরিয়ার কবির','চিতই পিঠার গুঁড়া ×৪','২৫ নভেম্বর',720,'p','নগদ'],['#১০৪২২','মেহেদী হাসান','চিংড়ি শুঁটকি ×২','২৪ নভেম্বর',900,'d','ক্যাশ অন ডেলিভারি'],['#১০৪২১','রুমানা পারভীন','মধু ×৩','২৪ নভেম্বর',2550,'d','বিকাশ'],['#১০৪২০','তানভীর আহমেদ','কালোজিরার তেল ×১','২৪ নভেম্বর',520,'c','নগদ'],['#১০৪১৯','সাবিনা খাতুন','ঘি ×১, গুড় ×২','২৩ নভেম্বর',1740,'d','বিকাশ'],['#১০৪১৮','কামরুল হাসান','সরিষার তেল ×২','২৩ নভেম্বর',1480,'p','ক্যাশ অন ডেলিভারি'],['#১০৪১৭','লিজা আক্তার','আচার ×৩, গুঁড়া ×২','২৩ নভেম্বর',1320,'d','নগদ']];
+let of='all',oq='';
+function oRows(){const r=OL.filter(o=>(of=='all'||o[5]==of)&&norm(o.slice(0,4).join(' ')).includes(en(oq).toLowerCase()));$('ob').innerHTML=r.length?r.map(o=>`<tr><td class="id">${o[0]}</td><td>${o[1]}</td><td>${o[2]}</td><td>${o[3]}</td><td>${o[6]}</td><td class="amt">৳${bn(o[4])}</td><td><span class="badge ${S[o[5]][1]}">${S[o[5]][0]}</span></td></tr>`).join(''):'<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:40px">কোনো অর্ডার পাওয়া যায়নি। অন্য ফিল্টার বা নাম দিয়ে খুঁজুন।</td></tr>';$('oc').textContent=bn(r.length)}
+function oTabs(){$('ot').innerHTML=tabs([['all','সব'],['p','পেন্ডিং'],['d','ডেলিভারড'],['c','বাতিল']],of,k=>k=='all'?OL.length:OL.filter(o=>o[5]==k).length)}
+$('view-orders').innerHTML=hd('অর্ডার','সব অর্ডার এক জায়গায় দেখুন ও খুঁজুন',addBtn('নতুন অর্ডার'))+`<div class="card"><div class="ch" style="flex-wrap:wrap"><div id="ot"></div>${srch('os','নাম বা অর্ডার নম্বর')}</div><div class="tw"><table><thead><tr><th>অর্ডার</th><th>কাস্টমার</th><th>প্রোডাক্ট</th><th>তারিখ</th><th>পেমেন্ট</th><th>টাকা</th><th>স্ট্যাটাস</th></tr></thead><tbody id="ob"></tbody></table></div><div class="foot"><span><span id="oc"></span>টি অর্ডার দেখানো হচ্ছে</span><span>বিক্রি হয়েছে ৳${bn(OL.filter(o=>o[5]=='d').reduce((a,o)=>a+o[4],0))}</span></div></div>`;
+oTabs();oRows();
+$('ot').onclick=e=>{const b=e.target.closest('.tab');if(b){of=b.dataset.k;oTabs();oRows()}};
+$('os').oninput=e=>{oq=e.target.value.trim();oRows()};
+
+/* Products */
+const PL=[['🍯','সুন্দরবনের খাঁটি মধু (৫০০গ্রাম)','মধু',850,3,20],['🧈','গাওয়া ঘি (২৫০গ্রাম)','ঘি ও তেল',980,9,25],['🌻','ঘানিভাঙা সরিষার তেল (২ লিটার)','ঘি ও তেল',740,7,30],['🌴','খেজুরের পাটালি গুড় (১ কেজি)','গুড় ও আচার',380,46,60],['🥭','হিমসাগর আম আচার (৫০০গ্রাম)','গুড় ও আচার',320,14,30],['🌾','চিতই পিঠার গুঁড়া (১ কেজি)','অন্যান্য',180,58,80],['🦐','চিংড়ি শুঁটকি (২৫০গ্রাম)','অন্যান্য',450,22,40],['🫙','কালোজিরার তেল (২৫০মিলি)','ঘি ও তেল',520,0,20]];
+let pc='সব';
+function pGrid(){const r=PL.filter(p=>pc=='সব'||p[2]==pc);$('pg').innerHTML=r.map(p=>{const s=p[4]==0?['স্টক শেষ','b-bad']:p[4]<=10?['কম স্টক','b-warn']:['স্টক আছে','b-ok'];return `<div class="card pc"><div class="tile">${p[0]}</div><div><h3>${p[1]}</h3><small>${p[2]}</small></div><div class="pr"><b>৳${bn(p[3])}</b><span class="badge ${s[1]}">${s[0]}</span></div><div class="meter ${p[4]>10?'':'warn'}"><i style="width:${p[4]/p[5]*100}%;background:${p[4]>10?'var(--brand)':''}"></i></div><small>${bn(p[4])}টি বাকি</small></div>`}).join('')}
+function pTabs(){$('pt').innerHTML=tabs(['সব','মধু','ঘি ও তেল','গুড় ও আচার','অন্যান্য'].map(x=>[x,x]),pc)}
+$('view-products').innerHTML=hd('প্রোডাক্ট',bn(PL.length)+'টি প্রোডাক্ট আছে, স্টকের অবস্থা নিচে',addBtn('প্রোডাক্ট যোগ করুন'))+'<div id="pt"></div><div class="pg" id="pg"></div>';
+pTabs();pGrid();
+$('pt').onclick=e=>{const b=e.target.closest('.tab');if(b){pc=b.dataset.k;pTabs();pGrid()}};
+
+/* Customers */
+const CL=[['তাহমিনা আক্তার','০১৭১২-৩৪৫৬৭৮','সোনাডাঙ্গা',18,24600,'২৬ নভেম্বর','ভিআইপি'],['রুমানা পারভীন','০১৮১৩-২২৪৪৫৫','শিববাড়ী',14,19800,'২৪ নভেম্বর','ভিআইপি'],['মেহেদী হাসান','০১৯১১-৮৮৭৭৬৬','দৌলতপুর',9,8700,'২৪ নভেম্বর','নিয়মিত'],['সাবিনা খাতুন','০১৫১৫-৪৩২১০০','খালিশপুর',7,7200,'২৩ নভেম্বর','নিয়মিত'],['ফারজানা ইয়াসমিন','০১৬১৬-৫৫৬৬৭৭','বয়রা',6,5400,'২৬ নভেম্বর','নিয়মিত'],['লিজা আক্তার','০১৭৭৭-১২৩৪৫৬','সোনাডাঙ্গা',3,2900,'২৩ নভেম্বর','নতুন'],['শাহরিয়ার কবির','০১৮৮৮-৯০১২৩৪','নিরালা',2,1500,'২৫ নভেম্বর','নতুন'],['মোঃ সোহেল রানা','০১৯৯৯-৭৬৫৪৩২','দৌলতপুর',1,1560,'২৬ নভেম্বর','নতুন']];
+const CT={'ভিআইপি':'b-ok','নিয়মিত':'b-warn','নতুন':'b-bad'};
+function cRows(q){const r=CL.filter(c=>c.slice(0,3).join(' ').includes(q));$('cb').innerHTML=r.length?r.map(c=>`<tr><td><div class="who"><span class="av">${c[0].replace('মোঃ ','')[0]}</span><div>${c[0]}<small>${c[1]}</small></div></div></td><td>${c[2]}</td><td>${bn(c[3])}টি</td><td class="amt">৳${bn(c[4])}</td><td>${c[5]}</td><td><span class="badge ${c[6]=='ভিআইপি'?'b-ok':c[6]=='নতুন'?'b-warn':'b-ok'}" style="${c[6]=='নিয়মিত'?'color:var(--brand);background:var(--brand-soft)':''}">${c[6]}</span></td></tr>`).join(''):'<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:40px">এই নামে কোনো কাস্টমার নেই।</td></tr>'}
+$('view-customers').innerHTML=hd('কাস্টমার','কারা বারবার কিনছেন, এক নজরে',addBtn('কাস্টমার যোগ করুন'))+`<div class="mini">${[['মোট কাস্টমার',342,'+৪৮ এই মাসে'],['নিয়মিত ক্রেতা',126,'২ বারের বেশি কিনেছেন'],['ভিআইপি',23,'১০ হাজার টাকার বেশি কিনেছেন']].map(s=>`<div class="card stat"><div class="row">${s[0]}</div><strong>${bn(s[1])}</strong><div class="delta"><span>${s[2]}</span></div></div>`).join('')}</div><div class="card"><div class="ch"><h2>কাস্টমার তালিকা</h2>${srch('cs','নাম, ফোন বা এলাকা')}</div><div class="tw"><table><thead><tr><th>কাস্টমার</th><th>এলাকা</th><th>অর্ডার</th><th>মোট কেনা</th><th>শেষ অর্ডার</th><th>ধরন</th></tr></thead><tbody id="cb"></tbody></table></div></div>`;
+cRows('');$('cs').oninput=e=>cRows(e.target.value.trim());
+
+/* Settings */
+const fl=(l,v)=>`<div class="field"><label>${l}</label><input value="${v}"></div>`;
+const tgl=(t,d,on,id)=>`<div class="tg"><div>${t}<small>${d}</small></div><input type="checkbox" class="sw" ${on?'checked':''} ${id?'id="'+id+'"':''} aria-label="${t}"></div>`;
+const sec=(t,d,b)=>`<div class="card sec"><div><h2>${t}</h2><p>${d}</p></div><div>${b}</div></div>`;
+$('view-settings').innerHTML=hd('সেটিংস','দোকানের তথ্য, পেমেন্ট ও নোটিফিকেশন ঠিক করুন')+
+sec('দোকানের তথ্য','কাস্টমার ইনভয়েসে এই তথ্য দেখবেন','<div class="form">'+fl('দোকানের নাম','সুন্দরবন অর্গানিক')+fl('ফোন নম্বর','০১৭১১-২২৩৩৪৪')+fl('ইমেইল','hello@sundarban-organic.com')+fl('ঠিকানা','৩২ কে.ডি.এ. এভিনিউ, খুলনা')+'</div>')+
+sec('ডেলিভারি চার্জ','এলাকা অনুযায়ী চার্জ ঠিক করুন','<div class="form">'+fl('খুলনা শহরের ভেতরে (৳)','৬০')+fl('খুলনার বাইরে (৳)','১২০')+fl('ফ্রি ডেলিভারির সীমা (৳)','২০০০')+'</div>')+
+sec('পেমেন্ট মাধ্যম','কাস্টমার যা দিয়ে টাকা দিতে পারবেন',tgl('বিকাশ','মার্চেন্ট নম্বর ০১৭১১-২২৩৩৪৪',1)+tgl('নগদ','মার্চেন্ট নম্বর ০১৮১১-২২৩৩৪৪',1)+tgl('ক্যাশ অন ডেলিভারি','পণ্য হাতে পেয়ে টাকা দেবেন',1))+
+sec('নোটিফিকেশন','কোন খবর আপনাকে জানানো হবে',tgl('নতুন অর্ডার এলে','প্রতিটি অর্ডারে নোটিফিকেশন',1)+tgl('স্টক কমে গেলে','১০টির কম থাকলে সতর্কবার্তা',1)+tgl('দৈনিক বিক্রির রিপোর্ট','প্রতিদিন রাত ৯টায় ইমেইলে',0))+
+sec('চেহারা','ড্যাশবোর্ডের রঙের ধরন',tgl('ডার্ক মোড','রাতে চোখের আরামের জন্য',0,'dk'))+
+'<div style="display:flex;justify-content:flex-end;gap:10px"><button class="btn ghost" data-toast="পরিবর্তন বাতিল হয়েছে">বাতিল</button><button class="btn" data-toast="সেটিংস সেভ হয়েছে">সেভ করুন</button></div>';
+const isDark=()=>{const r=document.documentElement;return r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches};
+$('dk').onchange=e=>document.documentElement.dataset.theme=e.target.checked?'dark':'light';
+
+/* Router */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-toast]');if(b)toast(b.dataset.toast)});
+function route(){let h=location.hash.slice(1);if(!V.includes(h))h='dashboard';V.forEach((v,i)=>{$('view-'+v).hidden=v!==h;navs[i].classList.toggle('on',v===h)});$('dk').checked=isDark();document.title=T2[h]+' – সুন্দরবন অর্গানিক';tog(false);scrollTo(0,0)}
+/* Add product / customer */
+const en=s=>String(s).replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d));
+const bd=s=>s.replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+const val=id=>$(id).value.trim();
+const inp=(id,l,ph,x='')=>`<div class="field"><label for="${id}">${l}</label><input id="${id}" placeholder="${ph}" ${x}></div>`;
+const sel=(id,l,opts)=>`<div class="field"><label for="${id}">${l}</label><select id="${id}">${opts.map(o=>`<option>${o}</option>`).join('')}</select></div>`;
+function dlg(title,body,ok,msg){
+ const o=document.createElement('div');o.className='ov';
+ o.innerHTML=`<form class="dlg" novalidate role="dialog" aria-modal="true" aria-label="${title}"><h2>${title}</h2><div style="display:flex;flex-direction:column;gap:14px">${body}</div><div class="err" id="er" role="alert"></div><div style="display:flex;justify-content:flex-end;gap:10px"><button type="button" class="btn ghost" id="cx">বাতিল</button><button class="btn">যোগ করুন</button></div></form>`;
+ document.body.appendChild(o);
+ const kd=e=>{if(e.key==='Escape')close()};const close=()=>{o.remove();document.removeEventListener('keydown',kd)};
+ document.addEventListener('keydown',kd);
+ o.onclick=e=>{if(e.target===o)close()};$('cx').onclick=close;
+ o.querySelector('input').focus();
+ o.querySelector('form').onsubmit=e=>{e.preventDefault();const er=ok();if(er){$('er').textContent=er;return}close();toast(msg)};
+}
+let addedC=0;
+function newProduct(){dlg('নতুন প্রোডাক্ট',
+ inp('pn','প্রোডাক্টের নাম','যেমন: লিচু ফুলের মধু (৫০০গ্রাম)')+
+ sel('pcat','ক্যাটাগরি',['মধু','ঘি ও তেল','গুড় ও আচার','অন্যান্য'])+
+ '<div class="row2">'+inp('pp','দাম (৳)','৪৫০','inputmode="numeric"')+inp('ps','স্টক (টি)','২০','inputmode="numeric"')+'</div>'+
+ inp('pe','আইকন (ইমোজি)','📦','maxlength="4"'),
+ ()=>{const n=val('pn'),p=+en(val('pp')),s=+en(val('ps')||'0');
+  if(!n)return 'প্রোডাক্টের নাম লিখুন';
+  if(!(p>0))return 'দাম সংখ্যায় লিখুন, যেমন ৪৫০';
+  if(!Number.isInteger(s)||s<0)return 'স্টক পূর্ণসংখ্যায় লিখুন, যেমন ২০';
+  PL.unshift([val('pe')||'📦',n,val('pcat'),p,s,Math.max(s,30)]);
+  pc='সব';pTabs();pGrid();
+  document.querySelector('#view-products .head p').textContent=bn(PL.length)+'টি প্রোডাক্ট আছে, স্টকের অবস্থা নিচে';
+ },'প্রোডাক্ট যোগ হয়েছে')}
+function newCustomer(){dlg('নতুন কাস্টমার',
+ inp('cn','নাম','যেমন: নাজমুল হক')+
+ inp('cp','ফোন নম্বর','০১৭১২৩৪৫৬৭৮','inputmode="tel"')+
+ `<div class="row2"><div class="field"><label for="ca">এলাকা</label><input id="ca" list="al" placeholder="সোনাডাঙ্গা"><datalist id="al">${['সোনাডাঙ্গা','দৌলতপুর','খালিশপুর','বয়রা','শিববাড়ী','নিরালা'].map(a=>`<option value="${a}">`).join('')}</datalist></div>`+sel('ct','ধরন',['নতুন','নিয়মিত','ভিআইপি'])+'</div>',
+ ()=>{const n=val('cn'),d=en(val('cp')).replace(/\D/g,'');
+  if(!n)return 'কাস্টমারের নাম লিখুন';
+  if(d.length!==11)return 'ফোন নম্বর ১১ ডিজিটের হতে হবে';
+  const ph=bd(d.slice(0,5)+'-'+d.slice(5));
+  if(CL.some(c=>c[1]===ph))return 'এই নম্বরে কাস্টমার আগেই আছে';
+  CL.unshift([n,ph,val('ca')||'খুলনা',0,0,'—',val('ct')]);addedC++;
+  $('cs').value='';cRows('');
+  document.querySelector('#view-customers .mini strong').textContent=bn(342+addedC);
+ },'কাস্টমার যোগ হয়েছে')}
+[['products',newProduct],['customers',newCustomer]].forEach(([v,f])=>{const b=document.querySelector(`#view-${v} .bar-t .btn`);delete b.dataset.toast;b.onclick=f});
+/* ---- v4: new order page, product details, search ---- */
+function norm(s){return en(s).toLowerCase()}
+function stk(p){return p[4]==0?['স্টক শেষ','b-bad']:p[4]<=10?['কম স্টক','b-warn']:['স্টক আছে','b-ok']}
+var pq='';
+function pGrid(){const r=PL.map((p,i)=>[p,i]).filter(([p])=>(pc=='সব'||p[2]==pc)&&(!pq||norm(p[1]+' '+p[2]).includes(pq)));
+ $('pg').innerHTML=r.length?r.map(([p,i])=>{const s=stk(p);return `<a class='card pc' href='#product-${i}'>${tile(p)}<div><h3>${p[1]}</h3><small>${p[2]}</small></div><div class='pr'><b>৳${bn(p[3])}</b><span class='badge ${s[1]}'>${s[0]}</span></div><div class='meter ${p[4]>10?'':'warn'}'><i style='width:${Math.min(100,p[4]/p[5]*100)}%;background:${p[4]>10?'var(--brand)':''}'></i></div><small>${bn(p[4])}টি বাকি</small></a>`}).join(''):`<div class='none' style='grid-column:1/-1'>কোনো প্রোডাক্ট পাওয়া যায়নি।</div>`}
+const KW=['কালোজিরার তেল','সরিষার তেল','মধু','ঘি','গুড়','আচার','গুঁড়া','শুঁটকি'];
+const kw=p=>KW.find(k=>p[1].includes(k))||p[1].split(' ')[0];
+T2['new-order']='নতুন অর্ডার';T2.product='প্রোডাক্টের বিবরণ';
+['new-order','product'].forEach(v=>{const m=document.createElement('main');m.className='wrap';m.id='view-'+v;m.hidden=true;document.querySelector('.main').appendChild(m)});
+
+/* product search on products page */
+{const pt=$('pt'),pw=document.createElement('div');pw.className='bar-t';pt.replaceWith(pw);pw.append(pt);pw.insertAdjacentHTML('beforeend',srch('psr','প্রোডাক্ট খুঁজুন'));
+ $('psr').oninput=e=>{pq=en(e.target.value.trim()).toLowerCase();pGrid()}}
+$('os').oninput=e=>{oq=bd(en(e.target.value.trim()));oRows()};
+$('cs').oninput=e=>cRows(bd(en(e.target.value.trim())));
+
+/* new order page */
+let NR=[{p:'',q:1}],NR0=null;
+function noRows(){const av=PL.map((p,i)=>[p,i]).filter(([p])=>p[4]>0);
+ $('no-rows').innerHTML=NR.map((r,i)=>`<div class='nrow'><select class='np' data-i='${i}' aria-label='প্রোডাক্ট'><option value=''>প্রোডাক্ট বাছুন</option>${av.map(([p,j])=>`<option value='${j}' ${r.p===j?'selected':''}>${p[1]} – ৳${bn(p[3])} (${bn(p[4])}টি আছে)</option>`).join('')}</select><input class='nq' data-i='${i}' inputmode='numeric' value='${bd(String(r.q))}' aria-label='পরিমাণ'><button type='button' class='iconbtn nx' data-i='${i}' aria-label='সরান'>✕</button></div>`).join('')}
+function noSum(){const sub=NR.reduce((a,r)=>a+(r.p===''?0:PL[r.p][3]*(r.q||0)),0),d=+$('no-d').value;
+ $('no-sum').innerHTML=`<div class='sl'><span>প্রোডাক্টের মোট</span><b>৳${bn(sub)}</b></div><div class='sl'><span>ডেলিভারি</span><b>৳${bn(d)}</b></div><div class='sl tot'><span>সর্বমোট</span><span>৳${bn(sub+d)}</span></div>`}
+function renderNO(){
+ $('view-new-order').innerHTML=`<a class='link' href='#orders'>← অর্ডার তালিকা</a>`+hd('নতুন অর্ডার','কাস্টমার ও প্রোডাক্ট বেছে অর্ডার তৈরি করুন')+`<div class='grid' style='align-items:start'><div class='card' style='display:flex;flex-direction:column;gap:18px'><div class='field'><label for='no-c'>কাস্টমার</label><select id='no-c'>${CL.map((c,i)=>`<option value='${i}'>${c[0]} – ${c[1]}</option>`).join('')}</select></div><div><h2 style='margin-bottom:12px'>প্রোডাক্ট</h2><div id='no-rows' style='display:flex;flex-direction:column;gap:10px'></div></div><div><button type='button' class='btn ghost' id='no-add'>+ আরেকটি প্রোডাক্ট</button></div></div><div class='card' style='display:flex;flex-direction:column;gap:14px'><h2>অর্ডারের সারাংশ</h2><div class='field'><label for='no-d'>ডেলিভারি</label><select id='no-d'><option value='60'>খুলনা শহরের ভেতরে – ৳৬০</option><option value='120'>খুলনার বাইরে – ৳১২০</option><option value='0'>দোকান থেকে নেবেন – ফ্রি</option></select></div><div class='field'><label for='no-m'>পেমেন্ট</label><select id='no-m'><option>বিকাশ</option><option>নগদ</option><option>ক্যাশ অন ডেলিভারি</option></select></div><div id='no-sum'></div><div class='err' id='no-er' role='alert'></div><button type='button' class='btn' id='no-ok'>অর্ডার তৈরি করুন</button></div></div>`;
+ noRows();noSum()}
+function noErr(m){$('no-er').textContent=m}
+function placeOrder(){noErr('');
+ const rows=NR.filter(r=>r.p!=='');
+ if(!rows.length)return noErr('অন্তত একটি প্রোডাক্ট বাছুন');
+ if(new Set(rows.map(r=>r.p)).size<rows.length)return noErr('একই প্রোডাক্ট দুবার যোগ হয়েছে, একটি সরিয়ে দিন');
+ for(const r of rows){const p=PL[r.p];if(!Number.isInteger(r.q)||r.q<1)return noErr('পরিমাণ ১ বা তার বেশি হতে হবে');if(r.q>p[4])return noErr(p[1]+' স্টকে আছে মাত্র '+bn(p[4])+'টি')}
+ const c=CL[+$('no-c').value],sub=rows.reduce((a,r)=>a+PL[r.p][3]*r.q,0),tot=sub+(+$('no-d').value),id='#'+bd(String(+en(OL[0][0].slice(1))+1));
+ OL.unshift([id,c[0],rows.map(r=>kw(PL[r.p])+' ×'+bd(String(r.q))).join(', '),'২৬ নভেম্বর',tot,'p',$('no-m').value]);
+ rows.forEach(r=>PL[r.p][4]-=r.q);
+ c[3]++;c[4]+=tot;c[5]='২৬ নভেম্বর';
+ of='all';oq='';$('os').value='';oTabs();oRows();cRows('');$('cs').value='';pGrid();
+ location.hash='#orders';toast('অর্ডার '+id+' তৈরি হয়েছে')}
+const NV=$('view-new-order');
+NV.addEventListener('change',e=>{const t=e.target;if(t.classList.contains('np')){const r=NR[+t.dataset.i];r.p=t.value===''?'':+t.value;r.q=1;noRows();noSum()}else if(t.id=='no-d')noSum()});
+NV.addEventListener('input',e=>{const t=e.target;if(t.classList.contains('nq')){NR[+t.dataset.i].q=+en(t.value)||0;noSum()}});
+NV.addEventListener('click',e=>{const x=e.target.closest('.nx');
+ if(x){NR.splice(+x.dataset.i,1);if(!NR.length)NR.push({p:'',q:1});noRows();noSum()}
+ else if(e.target.closest('#no-add')){NR.push({p:'',q:1});noRows()}
+ else if(e.target.closest('#no-ok'))placeOrder()});
+{const b=document.querySelector('#view-orders .bar-t .btn');delete b.dataset.toast;b.onclick=()=>{location.hash='#new-order'}}
+
+/* product details page */
+let PDI=0;
+function renderPD(i){const p=PL[i];if(!p){location.hash='#products';return}PDI=i;
+ const k=kw(p),rel=OL.filter(o=>o[2].includes(k)),s=stk(p),
+ sold=rel.reduce((a,o)=>a+o[2].split(', ').filter(x=>x.includes(k)).reduce((b,x)=>b+(+en(x.split('×')[1])||0),0),0);
+ $('view-product').innerHTML=`<a class='link' href='#products'>← প্রোডাক্ট তালিকা</a><div class='bar-t'><div class='head'><h1>${p[1]}</h1><p>${p[2]}</p></div><div style='display:flex;gap:10px;flex-wrap:wrap'><button class='btn ghost' id='pd-q'>+১০ স্টক যোগ করুন</button><button class='btn' id='pd-o' ${p[4]?'':`disabled style='opacity:.5;cursor:not-allowed'`}>এই প্রোডাক্টে অর্ডার</button></div></div>`+
+ `<div class='grid' style='align-items:start'><div class='card' style='display:flex;flex-direction:column;gap:18px'>${upl('pd-img',p.img,p[0],'big')}<div class='form'><div style='grid-column:1/-1'>${inp('pd-n','প্রোডাক্টের নাম','',`value='${p[1]}'`)}</div>${inp('pd-p','দাম (৳)','',`inputmode='numeric' value='${bd(String(p[3]))}'`)}${inp('pd-s','স্টক (টি)','',`inputmode='numeric' value='${bd(String(p[4]))}'`)}</div><div class='err' id='pd-er' role='alert'></div><div><button class='btn' id='pd-save'>পরিবর্তন সেভ করুন</button></div></div>`+
+ `<div style='display:flex;flex-direction:column;gap:20px'><div class='card stat'><div class='row'>স্টকের অবস্থা<span class='badge ${s[1]}'>${s[0]}</span></div><strong>${bn(p[4])}টি</strong><div class='meter ${p[4]>10?'':'warn'}'><i style='width:${Math.min(100,p[4]/p[5]*100)}%;background:${p[4]>10?'var(--brand)':''}'></i></div></div><div class='card stat'><div class='row'>এ পর্যন্ত বিক্রি</div><strong>${bn(sold)}টি</strong><div class='delta'><span>আয় ৳${bn(sold*p[3])}</span></div></div><div class='card stat'><div class='row'>স্টকের মূল্য</div><strong>৳${bn(p[3]*p[4])}</strong></div></div></div>`+
+ `<div class='card'><div class='ch'><h2>এই প্রোডাক্টের অর্ডার</h2><small>${bn(rel.length)}টি অর্ডার</small></div><div class='tw'><table><thead><tr><th>অর্ডার</th><th>কাস্টমার</th><th>পরিমাণ</th><th>তারিখ</th><th>অর্ডারের টাকা</th><th>স্ট্যাটাস</th></tr></thead><tbody>${rel.length?rel.map(o=>`<tr><td class='id'>${o[0]}</td><td>${o[1]}</td><td>${o[2].split(', ').filter(x=>x.includes(k)).join(', ')}</td><td>${o[3]}</td><td class='amt'>৳${bn(o[4])}</td><td><span class='badge ${S[o[5]][1]}'>${S[o[5]][0]}</span></td></tr>`).join(''):`<tr><td colspan='6' class='none'>এখনো কোনো অর্ডার নেই।</td></tr>`}</tbody></table></div></div>`}
+$('view-product').addEventListener('click',e=>{const p=PL[PDI];if(!p)return;
+ if(e.target.closest('#pd-q')){p[4]+=10;p[5]=Math.max(p[5],p[4]);renderPD(PDI);pGrid();toast('স্টক ১০টি বাড়ানো হয়েছে')}
+ else if(e.target.closest('#pd-o')){NR0=[{p:PDI,q:1}];location.hash='#new-order'}
+ else if(e.target.closest('#pd-save')){const n=val('pd-n'),pr=+en(val('pd-p')),st=+en(val('pd-s')||'0');
+  const er=!n?'প্রোডাক্টের নাম লিখুন':!(pr>0)?'দাম সংখ্যায় লিখুন':(!Number.isInteger(st)||st<0)?'স্টক পূর্ণসংখ্যায় লিখুন':'';
+  if(er){$('pd-er').textContent=er;return}
+  p[1]=n;p[3]=pr;p[4]=st;p[5]=Math.max(p[5],st);if(UPL['pd-img']!==undefined)p.img=UPL['pd-img'];renderPD(PDI);pGrid();toast('পরিবর্তন সেভ হয়েছে')}});
+
+/* global search */
+const tsr=document.querySelector('.top .search'),ti=tsr.querySelector('input'),dd=document.createElement('div');dd.className='dd';dd.hidden=true;tsr.appendChild(dd);
+function gsearch(){const q=en(ti.value.trim()).toLowerCase();if(!q){dd.hidden=true;return}
+ const P=PL.map((p,i)=>[p,i]).filter(([p])=>norm(p[1]+' '+p[2]).includes(q)).slice(0,4),
+ O=OL.filter(o=>norm(o.slice(0,4).join(' ')).includes(q)).slice(0,4),
+ C=CL.filter(c=>norm(c.slice(0,3).join(' ')).includes(q)).slice(0,4),
+ g=(t,a)=>a.length?`<h4>${t}</h4>`+a.join(''):'';
+ const html=g('প্রোডাক্ট',P.map(([p,i])=>`<button type='button' class='hit' data-t='p' data-i='${i}'><span class='ht'>${p[0]}</span><span>${p[1]}<small>${p[2]} – ৳${bn(p[3])}</small></span></button>`))+
+ g('অর্ডার',O.map(o=>`<button type='button' class='hit' data-t='o' data-id='${o[0]}'><span class='ht'>🧾</span><span>${o[0]} – ${o[1]}<small>${o[2]} – ৳${bn(o[4])}</small></span></button>`))+
+ g('কাস্টমার',C.map(c=>`<button type='button' class='hit' data-t='c' data-n='${c[0]}'><span class='ht'>${c[0].replace('মোঃ ','')[0]}</span><span>${c[0]}<small>${c[1]} – ${c[2]}</small></span></button>`));
+ dd.innerHTML=html||`<div class='none'></div>`;
+ if(!html)dd.firstChild.textContent='"'+ti.value.trim()+'" নিয়ে কিছু পাওয়া যায়নি';
+ dd.hidden=false}
+ti.addEventListener('input',gsearch);ti.addEventListener('focus',gsearch);
+ti.addEventListener('keydown',e=>{if(e.key==='Escape'){dd.hidden=true;ti.blur()}else if(e.key==='Enter'){e.preventDefault();dd.querySelector('.hit')?.click()}});
+dd.addEventListener('click',e=>{const h=e.target.closest('.hit');if(!h)return;const t=h.dataset.t;
+ if(t=='p')location.hash='#product-'+h.dataset.i;
+ else if(t=='o'){of='all';oq=h.dataset.id;$('os').value=oq;oTabs();oRows();location.hash='#orders'}
+ else location.hash='#customer-'+CL.findIndex(c=>c[0]===h.dataset.n)
+ dd.hidden=true;ti.value=''});
+document.addEventListener('click',e=>{if(!tsr.contains(e.target))dd.hidden=true});
+
+/* router v2 */
+function route(){let h=location.hash.slice(1)||'dashboard',main=h;const m=h.match(/^product-(\d+)$/);
+ if(m)main='product';else if(!V.includes(h)&&h!=='new-order')main=h='dashboard';
+ ['dashboard','orders','products','customers','settings','new-order','product'].forEach(v=>$('view-'+v).hidden=v!==main);
+ const nv=main==='new-order'?'orders':main==='product'?'products':main;
+ navs.forEach((a,i)=>a.classList.toggle('on',V[i]===nv));
+ if(main==='new-order'){NR=NR0||[{p:'',q:1}];NR0=null;renderNO()}
+ if(main==='product')renderPD(+m[1]);
+ $('dk').checked=isDark();document.title=T2[main]+' – সুন্দরবন অর্গানিক';tog(false);scrollTo(0,0)}
+/* ---- v5: images, owner profile, customer profile ---- */
+function tile(p,c){return `<div class='tile ${c||''}'>${p.img?`<img src='${p.img}' alt=''>`:p[0]}</div>`}
+function avh(img,t){return `<span class='av'>${img?`<img src='${img}' alt=''>`:t}</span>`}
+function ini(n){return n.replace('মোঃ ','')[0]}
+function ctb(t){return `<span class='badge ${t=='ভিআইপি'?'b-ok':t=='নতুন'?'b-warn':''}' ${t=='নিয়মিত'?`style='color:var(--brand);background:var(--brand-soft)'`:''}>${t}</span>`}
+const dig=s=>en(s).split('').filter(c=>c>='0'&&c<='9').join('');
+const fmtPh=s=>{const d=dig(s);return d.length==11?bd(d.slice(0,5)+'-'+d.slice(5)):null};
+const okMail=e=>e.includes('@')&&e.split('@')[1].includes('.');
+const kv=(a,b)=>`<div class='kv'><span>${a}</span><span>${b}</span></div>`;
+
+/* image upload component */
+const UPL={};
+function readImg(f,max){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.85))};im.onerror=rej;im.src=r.result};r.onerror=rej;r.readAsDataURL(f)})}
+function upl(id,cur,ph,v){UPL[id]=undefined;return `<div class='up ${v||''}' id='${id}' data-ph='${ph}'><div class='upv'>${cur?`<img src='${cur}' alt=''>`:`<span>${ph}</span>`}</div><div class='upc'><label class='btn ghost upb'>${cur?'বদলান':'ছবি আপলোড করুন'}<input type='file' accept='image/*' class='upf' hidden></label><button type='button' class='btn ghost upb uprm' ${cur?'':'hidden'}>ছবি সরান</button><small>ছবি এখানে টেনে এনেও ছাড়তে পারেন (JPG, PNG, WebP)</small><div class='upbar' hidden><i></i></div></div></div>`}
+async function upFile(box,f){if(!f)return;
+ if(!f.type.startsWith('image/')){toast('শুধু ছবির ফাইল বাছুন (JPG, PNG, WebP)');return}
+ if(f.size>8e6){toast('ছবিটি ৮ MB-র বেশি বড়, ছোট একটি বাছুন');return}
+ const bar=box.querySelector('.upbar'),fill=bar.firstElementChild;bar.hidden=false;fill.style.width='0';void fill.offsetWidth;fill.style.width='80%';
+ try{const u=await readImg(f,640);fill.style.width='100%';await new Promise(r=>setTimeout(r,380));UPL[box.id]=u;box.querySelector('.upv').innerHTML=`<img class='pop' src='${u}' alt=''>`;box.querySelector('.uprm').hidden=false}
+ catch(e){toast('ছবিটি পড়া যায়নি, অন্য ছবি চেষ্টা করুন')}
+ bar.hidden=true}
+document.addEventListener('change',e=>{if(e.target.classList.contains('upf')){upFile(e.target.closest('.up'),e.target.files[0]);e.target.value=''}});
+document.addEventListener('click',e=>{const b=e.target.closest('.uprm');if(b){const box=b.closest('.up');UPL[box.id]=null;box.querySelector('.upv').innerHTML=`<span class='pop'>${box.dataset.ph}</span>`;b.hidden=true}});
+['dragover','dragleave','drop'].forEach(t=>document.addEventListener(t,e=>{const box=e.target.closest&&e.target.closest('.up');if(!box)return;e.preventDefault();box.classList.toggle('drag',t=='dragover');if(t=='drop')upFile(box,e.dataTransfer.files[0])}));
+
+/* add product with photo */
+function newProduct(){dlg('নতুন প্রোডাক্ট',
+ inp('pn','প্রোডাক্টের নাম','যেমন: লিচু ফুলের মধু (৫০০গ্রাম)')+
+ upl('np-img',null,'📦','')+
+ sel('pcat','ক্যাটাগরি',['মধু','ঘি ও তেল','গুড় ও আচার','অন্যান্য'])+
+ `<div class='row2'>${inp('pp','দাম (৳)','৪৫০',`inputmode='numeric'`)}${inp('ps','স্টক (টি)','২০',`inputmode='numeric'`)}</div>`,
+ ()=>{const n=val('pn'),p=+en(val('pp')),s=+en(val('ps')||'0');
+  if(!n)return 'প্রোডাক্টের নাম লিখুন';
+  if(!(p>0))return 'দাম সংখ্যায় লিখুন, যেমন ৪৫০';
+  if(!Number.isInteger(s)||s<0)return 'স্টক পূর্ণসংখ্যায় লিখুন, যেমন ২০';
+  const np=['📦',n,val('pcat'),p,s,Math.max(s,30)];np.img=UPL['np-img']||null;PL.unshift(np);
+  pc='সব';pTabs();pGrid();
+  document.querySelector('#view-products .head p').textContent=bn(PL.length)+'টি প্রোডাক্ট আছে, স্টকের অবস্থা নিচে';
+ },'প্রোডাক্ট যোগ হয়েছে')}
+
+/* customers list with avatars and profile links */
+function cRows(q){const r=CL.map((c,i)=>[c,i]).filter(([c])=>c.slice(0,3).join(' ').includes(q));
+ $('cb').innerHTML=r.length?r.map(([c,i])=>`<tr><td><a class='who' href='#customer-${i}'>${avh(c.img,ini(c[0]))}<div>${c[0]}<small>${c[1]}</small></div></a></td><td>${c[2]}</td><td>${bn(c[3])}টি</td><td class='amt'>৳${bn(c[4])}</td><td>${c[5]}</td><td>${ctb(c[6])}</td></tr>`).join(''):`<tr><td colspan='6' class='none'>এই নামে কোনো কাস্টমার নেই।</td></tr>`}
+
+/* new views */
+T2.profile='আমার প্রোফাইল';T2.customer='কাস্টমার প্রোফাইল';
+['profile','customer'].forEach(v=>{const m=document.createElement('main');m.className='wrap';m.id='view-'+v;m.hidden=true;document.querySelector('.main').appendChild(m)});
+
+/* owner profile */
+const OWN={name:'রাকিব হাসান',role:'দোকানের মালিক',phone:'০১৭১১-২২৩৩৪৪',email:'rakib@sundarban-organic.com',addr:'৩২ কে.ডি.এ. এভিনিউ, খুলনা',bio:'খুলনার সুন্দরবন অঞ্চলের খাঁটি মধু, ঘি আর গুড় সরাসরি গ্রাম থেকে এনে বিক্রি করি।',img:null};
+function applyOwner(){const m=document.querySelector('.me');m.querySelector('.av').innerHTML=OWN.img?`<img src='${OWN.img}' alt=''>`:ini(OWN.name);m.querySelector('b').textContent=OWN.name;m.querySelector('small').textContent=OWN.role;
+ document.querySelector('#view-dashboard .head h1').textContent='শুভ সকাল, '+OWN.name.split(' ')[0]+' 👋'}
+const me=document.querySelector('.me');me.tabIndex=0;me.setAttribute('role','link');me.setAttribute('aria-label','আমার প্রোফাইল');
+me.addEventListener('click',()=>{location.hash='#profile'});me.addEventListener('keydown',e=>{if(e.key==='Enter')location.hash='#profile'});
+function renderProfile(){
+ $('view-profile').innerHTML=hd('আমার প্রোফাইল','আপনার ব্যক্তিগত তথ্য ও নিরাপত্তা')+
+ `<div class='card' style='display:flex;flex-direction:column;gap:18px'><h2>প্রোফাইল তথ্য</h2>${upl('pf-img',OWN.img,ini(OWN.name),'round')}<div class='form'>${inp('pf-n','নাম','',`value='${OWN.name}'`)}${inp('pf-r','পদবী','',`value='${OWN.role}'`)}${inp('pf-p','ফোন','',`inputmode='tel' value='${OWN.phone}'`)}${inp('pf-e','ইমেইল','',`value='${OWN.email}'`)}<div style='grid-column:1/-1'>${inp('pf-a','ঠিকানা','',`value='${OWN.addr}'`)}</div><div class='field' style='grid-column:1/-1'><label for='pf-b'>নিজের সম্পর্কে</label><textarea id='pf-b'>${OWN.bio}</textarea></div></div><div class='err' id='pf-er' role='alert'></div><div style='display:flex;justify-content:flex-end'><button class='btn' id='pf-save'>প্রোফাইল আপডেট করুন</button></div></div>`+
+ `<div class='card' style='display:flex;flex-direction:column;gap:18px'><h2>পাসওয়ার্ড বদলান</h2><div class='form'><div style='grid-column:1/-1'>${inp('pw-o','বর্তমান পাসওয়ার্ড','',`type='password' autocomplete='current-password'`)}</div>${inp('pw-n','নতুন পাসওয়ার্ড','অন্তত ৬টি অক্ষর',`type='password' autocomplete='new-password'`)}${inp('pw-c','নতুন পাসওয়ার্ড আবার','',`type='password' autocomplete='new-password'`)}</div><div class='err' id='pw-er' role='alert'></div><div style='display:flex;justify-content:flex-end'><button class='btn ghost' id='pw-save'>পাসওয়ার্ড আপডেট</button></div></div>`}
+$('view-profile').addEventListener('click',e=>{
+ if(e.target.closest('#pf-save')){const n=val('pf-n'),ph=fmtPh(val('pf-p')),em=val('pf-e');
+  const er=!n?'নাম লিখুন':!ph?'ফোন নম্বর ১১ ডিজিটের হতে হবে':!okMail(em)?'ইমেইল ঠিকানা সঠিক নয়':'';
+  if(er){$('pf-er').textContent=er;return}
+  Object.assign(OWN,{name:n,role:val('pf-r')||'মালিক',phone:ph,email:em,addr:val('pf-a'),bio:$('pf-b').value.trim()});
+  if(UPL['pf-img']!==undefined)OWN.img=UPL['pf-img'];
+  applyOwner();renderProfile();toast('প্রোফাইল আপডেট হয়েছে')}
+ else if(e.target.closest('#pw-save')){const a=$('pw-o').value,b=$('pw-n').value,c=$('pw-c').value;
+  const er=!a?'বর্তমান পাসওয়ার্ড লিখুন':b.length<6?'নতুন পাসওয়ার্ড অন্তত ৬টি অক্ষরের হতে হবে':b!==c?'দুটি নতুন পাসওয়ার্ড মিলছে না':'';
+  if(er){$('pw-er').textContent=er;return}
+  $('pw-er').textContent='';['pw-o','pw-n','pw-c'].forEach(x=>$(x).value='');toast('পাসওয়ার্ড বদলানো হয়েছে')}});
+
+/* customer profile */
+let CI=0,CE=false,NC0=null;
+function renderCust(i){const c=CL[i];if(!c){location.hash='#customers';return}CI=i;
+ const ords=OL.filter(o=>o[1]===c[0]);
+ let h=`<a class='link' href='#customers'>← কাস্টমার তালিকা</a>`;
+ if(CE){h+=hd('প্রোফাইল এডিট','তথ্য বদলে সেভ করুন')+
+  `<div class='card' style='display:flex;flex-direction:column;gap:18px'>${upl('cu-img',c.img,ini(c[0]),'round')}<div class='form'>${inp('cu-n','নাম','',`value='${c[0]}'`)}${inp('cu-p','ফোন','',`inputmode='tel' value='${c[1]}'`)}${inp('cu-e','ইমেইল (ঐচ্ছিক)','',`value='${c.email||''}'`)}${inp('cu-a','এলাকা','',`value='${c[2]}'`)}<div style='grid-column:1/-1'>${inp('cu-ad','ডেলিভারির ঠিকানা','',`value='${c.addr||''}'`)}</div><div class='field'><label for='cu-t'>ধরন</label><select id='cu-t'>${['নতুন','নিয়মিত','ভিআইপি'].map(t=>`<option ${t==c[6]?'selected':''}>${t}</option>`).join('')}</select></div><div class='field' style='grid-column:1/-1'><label for='cu-note'>নোট</label><textarea id='cu-note'>${c.note||''}</textarea></div></div><div class='err' id='cu-er' role='alert'></div><div style='display:flex;justify-content:flex-end;gap:10px'><button class='btn ghost' id='cu-cancel'>বাতিল</button><button class='btn' id='cu-save'>সেভ করুন</button></div></div>`}
+ else{h+=`<div class='bar-t'><div class='head'><h1>${c[0]}</h1><p>কাস্টমার প্রোফাইল</p></div><div style='display:flex;gap:10px;flex-wrap:wrap'><button class='btn ghost' id='cu-edit'>প্রোফাইল এডিট</button><button class='btn' id='cu-order'>+ নতুন অর্ডার</button></div></div>`+
+  `<div class='cg'><div class='card cprof'>${avh(c.img,ini(c[0]))}<div><h2>${c[0]}</h2></div>${ctb(c[6])}<div style='width:100%;margin-top:8px'>${kv('ফোন',c[1])}${kv('ইমেইল',c.email||'দেওয়া নেই')}${kv('এলাকা',c[2])}${kv('ঠিকানা',c.addr||'দেওয়া নেই')}${kv('নোট',c.note||'—')}</div></div>`+
+  `<div class='cstack'><div class='mini4'>${[['মোট অর্ডার',bn(c[3])+'টি'],['মোট কেনা','৳'+bn(c[4])],['গড় অর্ডার','৳'+bn(c[3]?Math.round(c[4]/c[3]):0)],['শেষ অর্ডার',c[5]]].map(s=>`<div class='card stat'><div class='row'>${s[0]}</div><strong style='font-size:22px'>${s[1]}</strong></div>`).join('')}</div>`+
+  `<div class='card'><div class='ch'><h2>অর্ডারের ইতিহাস</h2><small>${bn(ords.length)}টি অর্ডার</small></div><div class='tw'><table><thead><tr><th>অর্ডার</th><th>প্রোডাক্ট</th><th>তারিখ</th><th>টাকা</th><th>স্ট্যাটাস</th></tr></thead><tbody>${ords.length?ords.map(o=>`<tr><td class='id'>${o[0]}</td><td>${o[2]}</td><td>${o[3]}</td><td class='amt'>৳${bn(o[4])}</td><td><span class='badge ${S[o[5]][1]}'>${S[o[5]][0]}</span></td></tr>`).join(''):`<tr><td colspan='5' class='none'>এখনো কোনো অর্ডার নেই।</td></tr>`}</tbody></table></div></div></div></div>`}
+ $('view-customer').innerHTML=h}
+$('view-customer').addEventListener('click',e=>{const c=CL[CI];if(!c)return;
+ if(e.target.closest('#cu-edit')){CE=true;renderCust(CI)}
+ else if(e.target.closest('#cu-cancel')){CE=false;renderCust(CI)}
+ else if(e.target.closest('#cu-order')){NC0=CI;location.hash='#new-order'}
+ else if(e.target.closest('#cu-save')){const n=val('cu-n'),ph=fmtPh(val('cu-p')),em=val('cu-e');
+  const er=!n?'নাম লিখুন':!ph?'ফোন নম্বর ১১ ডিজিটের হতে হবে':CL.some((x,j)=>j!==CI&&x[1]===ph)?'এই নম্বরে অন্য কাস্টমার আছে':(em&&!okMail(em))?'ইমেইল ঠিকানা সঠিক নয়':'';
+  if(er){$('cu-er').textContent=er;return}
+  const old=c[0];OL.forEach(o=>{if(o[1]===old)o[1]=n});
+  c[0]=n;c[1]=ph;c[2]=val('cu-a')||'খুলনা';c[6]=val('cu-t');c.email=em;c.addr=val('cu-ad');c.note=$('cu-note').value.trim();
+  if(UPL['cu-img']!==undefined)c.img=UPL['cu-img'];
+  CE=false;renderCust(CI);$('cs').value='';cRows('');oRows();toast('কাস্টমার প্রোফাইল আপডেট হয়েছে')}});
+addEventListener('hashchange',()=>setTimeout(()=>{if(NC0!==null&&$('no-c')){$('no-c').value=NC0;NC0=null}}));
+
+/* router v3 */
+function route(){let h=location.hash.slice(1)||'dashboard',main=h;const mp=h.match(/^product-(\d+)$/),mc=h.match(/^customer-(\d+)$/);
+ if(mp)main='product';else if(mc)main='customer';else if(!V.includes(h)&&h!=='new-order'&&h!=='profile')main=h='dashboard';
+ ['dashboard','orders','products','customers','settings','new-order','product','profile','customer'].forEach(v=>$('view-'+v).hidden=v!==main);
+ const nv=main==='new-order'?'orders':main==='product'?'products':main==='customer'?'customers':main;
+ navs.forEach((a,i)=>a.classList.toggle('on',V[i]===nv));
+ if(main==='new-order'){NR=NR0||[{p:'',q:1}];NR0=null;renderNO()}
+ if(main==='product')renderPD(+mp[1]);
+ if(main==='customer'){CE=false;renderCust(+mc[1])}
+ if(main==='profile')renderProfile();
+ $('dk').checked=isDark();document.title=T2[main]+' – সুন্দরবন অর্গানিক';tog(false);scrollTo(0,0)}
+cRows('');pGrid();
+/* ---- v6: notifications + English/Bengali ---- */
+var I18N_READY=false,LANG='bn',TT0='';
+function hasBn(s){for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);if(c>=2432&&c<=2559)return true}return false}
+function norm(s){const e=en(s).toLowerCase();return I18N_READY?e+' '+en(trs(s)).toLowerCase():e}
+const DICT=`@স=S
+@র=R
+@ত=T
+@ম=M
+@ফ=F
+@আ=A
+@ন=N
+@শ=S
+@ল=L
+@ক=K
+@ব=B
+@দ=D
+@জ=J
+@হ=H
+@প=P
+@গ=G
+@চ=C
+@ই=I
+@উ=U
+@এ=E
+@ও=O
+@অ=A
+@সব=All
+@নাম=Name
+@ফোন=Phone
+@ধরন=Type
+@এলাকা=Area
+@নোট=Note
+@ঠিকানা=Address
+@ইমেইল=Email
+@টাকা=Amount
+@বাতিল=Cancelled
+@স্টক=Stock
+@দাম=Price
+@পদবী=Role
+@তারিখ=Date
+@পরিমাণ=Qty
+@স্ট্যাটাস=Status
+@পেমেন্ট=Payment
+@ডেলিভারি=Delivery
+সুন্দরবন অর্গানিক=Sundarban Organic
+অ্যাডমিন ড্যাশবোর্ড=Admin Dashboard
+সুন্দরবনের খাঁটি মধু=Sundarbans Pure Honey
+খাঁটি সুন্দরবনের মধু=Pure Sundarbans Honey
+গাওয়া ঘি=Gawa Ghee
+ঘানিভাঙা সরিষার তেল=Cold-pressed Mustard Oil
+খেজুরের পাটালি গুড়=Date-palm Patali Jaggery
+হিমসাগর আম আচার=Himsagar Mango Pickle
+চিতই পিঠার গুঁড়া=Chitoi Pitha Flour
+চিংড়ি শুঁটকি=Dried Shrimp
+কালোজিরার তেল=Black Seed Oil
+সরিষার তেল=Mustard oil
+খেজুরের গুড়=Date-palm jaggery
+মধু=Honey
+ঘি ও তেল=Ghee & oil
+গুড় ও আচার=Jaggery & pickles
+অন্যান্য=Others
+ঘি=Ghee
+গুড়=Jaggery
+আচার=Pickle
+গুঁড়া=Flour
+তাহমিনা আক্তার=Tahmina Akter
+মোঃ সোহেল রানা=Md. Sohel Rana
+ফারজানা ইয়াসমিন=Farzana Yasmin
+আরিফুল ইসলাম=Ariful Islam
+নুসরাত জাহান=Nusrat Jahan
+শাহরিয়ার কবির=Shahriar Kabir
+মেহেদী হাসান=Mehedi Hasan
+রুমানা পারভীন=Rumana Parvin
+তানভীর আহমেদ=Tanvir Ahmed
+সাবিনা খাতুন=Sabina Khatun
+কামরুল হাসান=Kamrul Hasan
+লিজা আক্তার=Liza Akter
+সোনাডাঙ্গা=Sonadanga
+দৌলতপুর=Daulatpur
+খালিশপুর=Khalishpur
+বয়রা=Boyra
+শিববাড়ী=Shibbari
+নিরালা=Nirala
+গ্রাম=g
+ লিটার= L
+লিটার=L
+ কেজি= kg
+কেজি=kg
+মিলি=ml
+কে.ডি.এ. এভিনিউ=KDA Avenue
+খুলনা শাখা=Khulna branch
+সকাল ৯টা – রাত ৯টা=9am – 9pm
+খুলনা শহরের ভেতরে=Inside Khulna city
+খুলনার বাইরে=Outside Khulna
+খুলনা=Khulna
+সুন্দরবন=Sundarban
+অর্ডার, প্রোডাক্ট বা কাস্টমার খুঁজুন=Search orders, products or customers
+মেনু খুলুন=Open menu
+ডার্ক মোড বদলান=Toggle dark mode
+ডার্ক মোড=Dark mode
+ড্যাশবোর্ডের রঙের ধরন=Dashboard colour mode
+ড্যাশবোর্ড=Dashboard
+আমার প্রোফাইল=My profile
+রাকিব হাসান=Rakib Hasan
+রাকিব=Rakib
+দোকানের মালিক=Shop owner
+মালিক=Owner
+শুভ সকাল=Good morning
+বৃহস্পতিবার=Thursday
+নভেম্বর=Nov
+আজ দোকানের অবস্থা এক নজরে=today's shop status at a glance
+আজকের বিক্রি=Today's sales
+মোট অর্ডার=Total orders
+মোট কাস্টমার=Total customers
+নতুন কাস্টমার যোগ হয়েছে=New customer added
+নতুন কাস্টমার=New customer
+পেন্ডিং অর্ডার=Pending orders
+গতকালের তুলনায়=vs yesterday
+সপ্তাহের বিক্রি=Weekly sales
+গত ৭ দিনে মোট=Last 7 days total
+গত সপ্তাহের চেয়ে ১২% বেশি=12% more than last week
+শুক্র=Fri
+শনি=Sat
+রবি=Sun
+সোম=Mon
+মঙ্গল=Tue
+বুধ=Wed
+বৃহ=Thu
+স্টক কমে যাচ্ছে=Running low
+স্টক কমে গেলে=When stock runs low
+সব দেখুন=View all
+সব পড়া হয়েছে চিহ্নিত করুন=Mark all as read
+সব অর্ডার দেখুন=View all orders
+সব অর্ডার এক জায়গায় দেখুন ও খুঁজুন=View and search all orders in one place
+সব অর্ডার=All orders
+সাম্প্রতিক অর্ডার=Recent orders
+সবচেয়ে বেশি বিক্রি=Best sellers
+এই সপ্তাহ=This week
+টি বাকি= left
+টি বিক্রি= sold
+টি আছে)= in stock)
+টি অর্ডার দেখানো হচ্ছে= orders shown
+টি প্রোডাক্ট আছে, স্টকের অবস্থা নিচে= products, stock status below
+টি অর্ডার= orders
+১০টির কম থাকলে সতর্কবার্তা=Alert when fewer than 10 are left
+বিক্রি হয়েছে=Sold
+এ পর্যন্ত বিক্রি=Sold so far
+আয় ৳=Revenue ৳
+স্টকের অবস্থা=Stock status
+স্টকের মূল্য=Stock value
+স্টক শেষ=Out of stock
+কম স্টক=Low stock
+স্টক আছে=In stock
+স্টক (টি)=Stock (pcs)
+স্টক ১০টি বাড়ানো হয়েছে=Stock increased by 10
++১০ স্টক যোগ করুন=+10 stock
+মোট বিক্রি=total sales
+অর্ডারের টাকা=Order total
+অর্ডারের ইতিহাস=Order history
+অর্ডারের সারাংশ=Order summary
+এই প্রোডাক্টের অর্ডার=Orders for this product
+এই প্রোডাক্টে অর্ডার=Order this product
+প্রতিটি অর্ডারে নোটিফিকেশন=A notification for every order
+নতুন অর্ডার এলে=When a new order arrives
+নতুন অর্ডার=New order
+অর্ডার তৈরি করুন=Place order
+অর্ডার তালিকা=Order list
+কাস্টমার ও প্রোডাক্ট বেছে অর্ডার তৈরি করুন=Pick a customer and products to create an order
+কোনো অর্ডার পাওয়া যায়নি। অন্য ফিল্টার বা নাম দিয়ে খুঁজুন।=No orders found. Try another filter or name.
+এখনো কোনো অর্ডার নেই।=No orders yet.
+নাম বা অর্ডার নম্বর=Name or order number
+পেন্ডিং=Pending
+ডেলিভারড=Delivered
+প্রোডাক্টের নাম লিখুন=Enter the product name
+প্রোডাক্টের নাম=Product name
+প্রোডাক্ট যোগ হয়েছে=Product added
+প্রোডাক্ট যোগ করুন=Add product
+প্রোডাক্ট খুঁজুন=Search products
+প্রোডাক্ট তালিকা=Product list
+প্রোডাক্টের মোট=Items total
+প্রোডাক্টের বিবরণ=Product details
+প্রোডাক্ট বাছুন=Select a product
+নতুন প্রোডাক্ট=New product
+কোনো প্রোডাক্ট পাওয়া যায়নি।=No products found.
++ আরেকটি প্রোডাক্ট=+ Add another product
+প্রোডাক্ট=Product
+কাস্টমার তালিকা=Customer list
+কাস্টমার যোগ করুন=Add customer
+কাস্টমার যোগ হয়েছে=Customer added
+কাস্টমার প্রোফাইল আপডেট হয়েছে=Customer profile updated
+কাস্টমার প্রোফাইল=Customer profile
+কাস্টমারের নাম লিখুন=Enter the customer's name
+কাস্টমার ইনভয়েসে এই তথ্য দেখবেন=Customers will see this on invoices
+কাস্টমার যা দিয়ে টাকা দিতে পারবেন=What customers can pay with
+কাস্টমার নিজে বাতিল করেছেন=Customer cancelled it
+কাস্টমার=Customer
+ক্যাটাগরি=Category
+দাম (৳)=Price (৳)
+ছবি আপলোড করুন=Upload photo
+বদলান=Change
+ছবি সরান=Remove photo
+ছবি এখানে টেনে এনেও ছাড়তে পারেন (JPG, PNG, WebP)=You can also drag and drop a photo here (JPG, PNG, WebP)
+শুধু ছবির ফাইল বাছুন (JPG, PNG, WebP)=Please choose an image file (JPG, PNG, WebP)
+ছবিটি ৮ MB-র বেশি বড়, ছোট একটি বাছুন=The image is over 8 MB, choose a smaller one
+ছবিটি পড়া যায়নি, অন্য ছবি চেষ্টা করুন=Couldn't read the image, try another one
+পরিবর্তন সেভ করুন=Save changes
+পরিবর্তন সেভ হয়েছে=Changes saved
+পরিবর্তন বাতিল হয়েছে=Changes discarded
+দাম সংখ্যায় লিখুন, যেমন ৪৫০=Enter the price as a number, e.g. 450
+দাম সংখ্যায় লিখুন=Enter the price as a number
+স্টক পূর্ণসংখ্যায় লিখুন, যেমন ২০=Enter stock as a whole number, e.g. 20
+স্টক পূর্ণসংখ্যায় লিখুন=Enter stock as a whole number
+যেমন: লিচু ফুলের মধু=e.g. Litchi blossom honey
+পরিমাণ ১ বা তার বেশি হতে হবে=Quantity must be 1 or more
+অন্তত একটি প্রোডাক্ট বাছুন=Select at least one product
+একই প্রোডাক্ট দুবার যোগ হয়েছে, একটি সরিয়ে দিন=The same product was added twice, remove one
+সরান=Remove
+ডেলিভারি=Delivery
+দোকান থেকে নেবেন=Store pickup
+ফ্রি=Free
+সর্বমোট=Grand total
+বিকাশ=bKash
+নগদ=Nagad
+ক্যাশ অন ডেলিভারি=Cash on delivery
+পণ্য হাতে পেয়ে টাকা দেবেন=Pay when the goods arrive
+মার্চেন্ট নম্বর=Merchant number
+কারা বারবার কিনছেন, এক নজরে=Who keeps buying, at a glance
+কাস্টমার যোগ করুন=Add customer
+এই মাসে=this month
+নিয়মিত ক্রেতা=Regular customers
+২ বারের বেশি কিনেছেন=Bought more than 2 times
+ভিআইপি=VIP
+১০ হাজার টাকার বেশি কিনেছেন=Spent over ৳10,000
+নাম, ফোন বা এলাকা=Name, phone or area
+মোট কেনা=Total spent
+শেষ অর্ডার=Last order
+নিয়মিত=Regular
+নতুন পাসওয়ার্ড আবার=Repeat new password
+নতুন পাসওয়ার্ড অন্তত ৬টি অক্ষরের হতে হবে=New password must be at least 6 characters
+নতুন পাসওয়ার্ড=New password
+নতুন=New
+এই নামে কোনো কাস্টমার নেই।=No customer with that name.
+যেমন: নাজমুল হক=e.g. Nazmul Haque
+ফোন নম্বর ১১ ডিজিটের হতে হবে=Phone number must be 11 digits
+ফোন নম্বর=Phone number
+এই নম্বরে কাস্টমার আগেই আছে=A customer with this number already exists
+এই নম্বরে অন্য কাস্টমার আছে=Another customer already has this number
+ইমেইল (ঐচ্ছিক)=Email (optional)
+ইমেইল ঠিকানা সঠিক নয়=The email address is not valid
+ইমেইল ঠিকানা=Email address
+ডেলিভারির ঠিকানা=Delivery address
+নাম লিখুন=Enter a name
+যোগ করুন=Add
+সেভ করুন=Save
+প্রোফাইল এডিট=Edit profile
+তথ্য বদলে সেভ করুন=Update the details and save
+গড় অর্ডার=Average order
+দেওয়া নেই=Not provided
+অর্ডার=Order
+নোটিফিকেশন=Notifications
+অর্ডার, স্টক ও কাস্টমারের সব খবর এক জায়গায়=All order, stock and customer updates in one place
+কোনো নোটিফিকেশন নেই।=No notifications.
+অপঠিত=Unread
+অর্ডার করেছেন=placed an order
+পেমেন্ট গ্রহণ হয়েছে=Payment received
+অর্ডার ডেলিভারি সম্পন্ন=Order delivered
+অর্ডার বাতিল হয়েছে=Order cancelled
+দৈনিক রিপোর্ট প্রস্তুত=Daily report ready
+দৈনিক বিক্রির রিপোর্ট=Daily sales report
+গতকাল=Yesterday
+এইমাত্র=Just now
+মিনিট আগে=min ago
+ঘণ্টা আগে=h ago
+স্টকে নেই=is out of stock
+নিয়ে কিছু পাওয়া যায়নি=– nothing found
+সেটিংস সেভ হয়েছে=Settings saved
+সেটিংস=Settings
+দোকানের তথ্য, পেমেন্ট ও নোটিফিকেশন ঠিক করুন=Manage shop details, payments and notifications
+দোকানের তথ্য=Shop details
+দোকানের নাম=Shop name
+ডেলিভারি চার্জ=Delivery charges
+এলাকা অনুযায়ী চার্জ ঠিক করুন=Set charges by area
+ফ্রি ডেলিভারির সীমা (৳)=Free delivery above (৳)
+পেমেন্ট মাধ্যম=Payment methods
+কোন খবর আপনাকে জানানো হবে=Which updates you will be notified about
+প্রতিদিন রাত ৯টায় ইমেইলে=Emailed every night at 9pm
+চেহারা=Appearance
+রাতে চোখের আরামের জন্য=Easier on the eyes at night
+নতুন অর্ডার=New order
+প্রোফাইল তথ্য=Profile details
+প্রোফাইল আপডেট হয়েছে=Profile updated
+প্রোফাইল আপডেট করুন=Update profile
+প্রোফাইল=Profile
+আপনার ব্যক্তিগত তথ্য ও নিরাপত্তা=Your personal details and security
+নিজের সম্পর্কে=About you
+খুলনার সুন্দরবন অঞ্চলের খাঁটি মধু, ঘি আর গুড় সরাসরি গ্রাম থেকে এনে বিক্রি করি।=I sell pure honey, ghee and jaggery from the Sundarbans region of Khulna, sourced straight from the villages.
+পাসওয়ার্ড বদলানো হয়েছে=Password changed
+পাসওয়ার্ড আপডেট=Update password
+পাসওয়ার্ড বদলান=Change password
+বর্তমান পাসওয়ার্ড লিখুন=Enter your current password
+বর্তমান পাসওয়ার্ড=Current password
+দুটি নতুন পাসওয়ার্ড মিলছে না=The two new passwords do not match
+অন্তত ৬টি অক্ষর=At least 6 characters
+অন্তত=at least
+অর্ডারের=Order's
+দিয়ে=with`;
+const EX=new Map(),DL=[];
+DICT.split('\n').forEach(l=>{if(!l.trim())return;const i=l.indexOf('=');let k=l.slice(0,i),v=l.slice(i+1);const ex=k[0]=='@';if(ex)k=k.slice(1);k=k.normalize('NFC');if(ex)EX.set(k,v);else DL.push([k,v])});
+DL.sort((a,b)=>b[0].length-a[0].length);
+const rxn=(s,f)=>new RegExp(s.normalize('NFC'),f);
+const RX=[[rxn('স্টকে আছে মাত্র ([০-৯,]+)টি','g'),'has only $1 in stock'],[rxn('মাত্র ([০-৯,]+)টি বাকি আছে','g'),'only $1 left in stock'],[rxn('^অর্ডার (#[০-৯]+) তৈরি হয়েছে$','g'),'Order $1 created']];
+const PLU={'অর্ডার':'Orders','প্রোডাক্ট':'Products','কাস্টমার':'Customers'};
+function trs(s){let t=s.normalize('NFC');if(!hasBn(t))return t;const k=t.trim();if(EX.has(k))return t.replace(k,EX.get(k));
+ RX.forEach(([r,v])=>{t=t.replace(r,v)});
+ for(const [k2,v] of DL)if(t.includes(k2))t=t.split(k2).join(v);
+ t=t.replace(/[০-৯]/g,d=>'০১২৩৪৫৬৭৮৯'.indexOf(d)).replace(/([0-9])টি/g,'$1');
+ return t.replace(/ {2,}/g,' ')}
+const ORIG=new WeakMap(),OA=new WeakMap(),OV=new WeakMap(),AT=['placeholder','aria-label','title','alt'];
+function tnode(n){const cur=n.data,el=n.parentElement;if(!hasBn(cur)||!el||el.closest('[data-notr],script,style'))return;
+ const k=cur.normalize('NFC').trim();let out;
+ if(PLU[k]&&el.closest('nav,h1,h2,h4,.tab'))out=cur.replace(cur.trim(),PLU[k]);
+ else if(k==='নতুন কাস্টমার'&&el.closest('.stat'))out=cur.replace(cur.trim(),'New customers');
+ else if(k==='বাতিল'&&el.closest('.btn'))out=cur.replace(cur.trim(),'Cancel');
+ else if(k==='অর্ডার'&&el.closest('#view-customers th'))out=cur.replace(cur.trim(),'Orders');
+ else out=trs(cur);
+ if(out!==cur){ORIG.set(n,{o:cur,t:out});n.data=out}}
+function attrs(el){if(!el.getAttribute||el.closest('[data-notr]'))return;
+ for(const a of AT){const v=el.getAttribute(a);if(v&&hasBn(v)){const t=trs(v);if(t!==v){let r=OA.get(el);if(!r){r={};OA.set(el,r)}r[a]={o:v,t};el.setAttribute(a,t)}}}
+ if((el.tagName=='INPUT'&&['text','search','tel','email'].includes(el.type))||el.tagName=='TEXTAREA'){const v=el.value;if(hasBn(v)&&document.activeElement!==el){const t=trs(v);if(t!==v){OV.set(el,{o:v,t});el.value=t}}}}
+function walkEl(root){if(root.nodeType===3){tnode(root);return}if(root.nodeType!==1)return;
+ if(root.closest('[data-notr],script,style'))return;
+ const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),arr=[];let n;while(n=tw.nextNode())arr.push(n);arr.forEach(tnode);
+ attrs(root);root.querySelectorAll('*').forEach(attrs)}
+function restoreAll(){const tw=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;while(n=tw.nextNode()){const r=ORIG.get(n);if(r&&n.data===r.t)n.data=r.o}
+ document.querySelectorAll('*').forEach(el=>{const a=OA.get(el);if(a)for(const k in a){if(el.getAttribute(k)===a[k].t)el.setAttribute(k,a[k].o)}const v=OV.get(el);if(v&&el.value===v.t)el.value=v.o});
+ if(TT0)document.title=TT0}
+const fixOpt=r=>{if(r.querySelectorAll)r.querySelectorAll('option:not([value])').forEach(o=>o.setAttribute('value',o.textContent))};
+new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(fixOpt))).observe(document.body,{childList:true,subtree:true});fixOpt(document.body);
+const CFG={childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:AT};
+const OBS=new MutationObserver(ms=>{OBS.disconnect();try{ms.forEach(m=>{if(m.type=='childList')m.addedNodes.forEach(walkEl);else if(m.type=='characterData')tnode(m.target);else attrs(m.target)})}finally{OBS.observe(document.body,CFG)}});
+const lb=document.createElement('button');lb.id='lang';lb.type='button';lb.className='iconbtn';lb.dataset.notr='1';$('theme').before(lb);lb.onclick=()=>setLang(LANG=='en'?'bn':'en');
+function setLang(l){LANG=l;try{localStorage.setItem('lang',l)}catch(e){}
+ document.documentElement.lang=l=='en'?'en':'bn';
+ lb.textContent=l=='en'?'বাং':'EN';lb.setAttribute('aria-label',l=='en'?'Switch to Bengali':'Switch to English');lb.title=l=='en'?'বাংলা':'English';
+ OBS.disconnect();
+ if(l=='en'){walkEl(document.body);TT0=document.title;document.title=trs(TT0);OBS.observe(document.body,CFG)}else restoreAll()}
+addEventListener('hashchange',()=>setTimeout(()=>{if(LANG=='en'){TT0=document.title;document.title=trs(TT0)}}));
+
+/* dashboard links */
+{const dl=document.querySelectorAll('#view-dashboard a.link');dl[0].href='#products';dl[1].href='#orders'}
+
+/* customers list (search works in both languages) */
+function cRows(q){const r=CL.map((c,i)=>[c,i]).filter(([c])=>norm(c.slice(0,3).join(' ')).includes(en(q).toLowerCase()));
+ $('cb').innerHTML=r.length?r.map(([c,i])=>`<tr><td><a class='who' href='#customer-${i}'>${avh(c.img,ini(c[0]))}<div>${c[0]}<small>${c[1]}</small></div></a></td><td>${c[2]}</td><td>${bn(c[3])}টি</td><td class='amt'>৳${bn(c[4])}</td><td>${c[5]}</td><td>${ctb(c[6])}</td></tr>`).join(''):`<tr><td colspan='6' class='none'>এই নামে কোনো কাস্টমার নেই।</td></tr>`}
+
+/* orders helper */
+function gotoOrders(id){of='all';oq='';$('os').value='';oTabs();oRows();location.hash='#orders';
+ if(id)setTimeout(()=>{const r=[...document.querySelectorAll('#ob tr')].find(t=>t.firstElementChild&&en(t.firstElementChild.textContent)===en(id));if(r){r.classList.add('flash');r.scrollIntoView({block:'center',behavior:'smooth'})}},120)}
+
+/* notifications */
+T2.notifications='নোটিফিকেশন';
+{const m=document.createElement('main');m.className='wrap';m.id='view-notifications';m.hidden=true;document.querySelector('.main').appendChild(m)}
+const NT=[
+ {k:'order',ti:'নতুন অর্ডার #১০৪২৮',bd:'তাহমিনা আক্তার অর্ডার করেছেন: মধু ×২, ঘি ×১ – ৳২,১৫০',tm:'এইমাত্র',to:'o:#১০৪২৮',un:1},
+ {k:'order',ti:'নতুন অর্ডার #১০৪২৭',bd:'মোঃ সোহেল রানা অর্ডার করেছেন: সরিষার তেল ×৩ – ৳১,৫৬০',tm:'১২ মিনিট আগে',to:'o:#১০৪২৭',un:1},
+ {k:'stock',ti:'স্টক কমে যাচ্ছে',bd:'সুন্দরবনের খাঁটি মধু (৫০০গ্রাম) মাত্র ৩টি বাকি আছে',tm:'৪৫ মিনিট আগে',to:'p:সুন্দরবনের খাঁটি মধু',un:1},
+ {k:'pay',ti:'পেমেন্ট গ্রহণ হয়েছে',bd:'#১০৪২৬ – ফারজানা ইয়াসমিন – বিকাশ ৳১,২৫০',tm:'১ ঘণ্টা আগে',to:'o:#১০৪২৬',un:1},
+ {k:'cust',ti:'নতুন কাস্টমার যোগ হয়েছে',bd:'লিজা আক্তার – সোনাডাঙ্গা',tm:'২ ঘণ্টা আগে',to:'c:লিজা আক্তার',un:0},
+ {k:'stock',ti:'স্টক শেষ',bd:'কালোজিরার তেল (২৫০মিলি) স্টকে নেই',tm:'৩ ঘণ্টা আগে',to:'p:কালোজিরার তেল',un:0},
+ {k:'ok',ti:'অর্ডার ডেলিভারি সম্পন্ন',bd:'#১০৪২৪ – নুসরাত জাহান – ডেলিভারড',tm:'গতকাল',to:'o:#১০৪২৪',un:0},
+ {k:'cancel',ti:'অর্ডার বাতিল হয়েছে',bd:'#১০৪২৫ – আরিফুল ইসলাম – কাস্টমার নিজে বাতিল করেছেন',tm:'গতকাল',to:'o:#১০৪২৫',un:0},
+ {k:'rep',ti:'দৈনিক রিপোর্ট প্রস্তুত',bd:'গতকাল ৩৮টি অর্ডার, মোট বিক্রি ৳৪৪,৯০০',tm:'গতকাল',to:'d',un:0}];
+const NI={order:'🧾',stock:'⚠️',pay:'💳',ok:'✅',cancel:'❌',cust:'👤',rep:'📊'};
+const dotEl=document.querySelector('.dot');
+function nBadge(){const c=NT.filter(n=>n.un).length;dotEl.textContent=c?bn(c):'';dotEl.hidden=!c}
+let nf='all';
+const nfil=(n,k)=>k=='all'||(k=='un'&&n.un)||(k=='order'&&['order','pay','ok','cancel'].includes(n.k))||(k=='stock'&&n.k=='stock');
+function renderNotif(){const list=NT.map((n,i)=>[n,i]).filter(([n])=>nfil(n,nf));
+ $('view-notifications').innerHTML=hd('নোটিফিকেশন','অর্ডার, স্টক ও কাস্টমারের সব খবর এক জায়গায়',`<div style='display:flex;gap:10px;flex-wrap:wrap'><button class='btn ghost' id='nt-all'>সব পড়া হয়েছে চিহ্নিত করুন</button><button class='btn' id='nt-orders'>সব অর্ডার দেখুন</button></div>`)+
+ `<div class='card'><div class='ch'>${tabs([['all','সব'],['un','অপঠিত'],['order','অর্ডার'],['stock','স্টক']],nf,k=>NT.filter(n=>nfil(n,k)).length)}</div><div>${list.length?list.map(([n,i])=>`<button type='button' class='nt ${n.un?'un':''}' data-i='${i}'><span class='nti ${n.k}'>${NI[n.k]}</span><span class='ntb'><b>${n.ti}</b><span>${n.bd}</span><small>${n.tm}</small></span>${n.un?`<i class='ntd'></i>`:''}</button>`).join(''):`<div class='none'>কোনো নোটিফিকেশন নেই।</div>`}</div></div>`}
+function ntGo(n){const t=n.to[0],v=n.to.slice(2);
+ if(t=='o')gotoOrders(v);
+ else if(t=='p'){const i=PL.findIndex(p=>p[1].startsWith(v));location.hash=i>=0?'#product-'+i:'#products'}
+ else if(t=='c'){const i=CL.findIndex(c=>c[0]===v);location.hash=i>=0?'#customer-'+i:'#customers'}
+ else location.hash='#dashboard'}
+$('view-notifications').addEventListener('click',e=>{
+ const tb=e.target.closest('.tab'),nt=e.target.closest('.nt');
+ if(tb){nf=tb.dataset.k;renderNotif()}
+ else if(nt){const n=NT[+nt.dataset.i];n.un=0;nBadge();ntGo(n)}
+ else if(e.target.closest('#nt-all')){NT.forEach(n=>n.un=0);nBadge();renderNotif()}
+ else if(e.target.closest('#nt-orders'))gotoOrders()});
+dotEl.parentElement.onclick=()=>{location.hash='#notifications'};
+nBadge();
+
+/* router v4 */
+function route(){let h=location.hash.slice(1)||'dashboard',main=h;const mp=h.match(/^product-([0-9]+)$/),mc=h.match(/^customer-([0-9]+)$/);
+ if(mp)main='product';else if(mc)main='customer';else if(!V.includes(h)&&!['new-order','profile','notifications'].includes(h))main=h='dashboard';
+ ['dashboard','orders','products','customers','settings','new-order','product','profile','customer','notifications'].forEach(v=>$('view-'+v).hidden=v!==main);
+ const nv=main==='new-order'?'orders':main==='product'?'products':main==='customer'?'customers':main;
+ navs.forEach((a,i)=>a.classList.toggle('on',V[i]===nv));
+ if(main==='new-order'){NR=NR0||[{p:'',q:1}];NR0=null;renderNO()}
+ if(main==='product')renderPD(+mp[1]);
+ if(main==='customer'){CE=false;renderCust(+mc[1])}
+ if(main==='profile')renderProfile();
+ if(main==='notifications')renderNotif();
+ $('dk').checked=isDark();document.title=T2[main]+' – সুন্দরবন অর্গানিক';tog(false);scrollTo(0,0)}
+I18N_READY=true;
+addEventListener('hashchange',route);route();
+setLang((()=>{try{return localStorage.getItem('lang')==='en'?'en':'bn'}catch(e){return 'bn'}})());
+</script>
+</body>
+</html>
