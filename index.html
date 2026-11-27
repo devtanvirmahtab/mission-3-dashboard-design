@@ -245,8 +245,58 @@ a.pc:hover{transform:translateY(-4px);box-shadow:0 24px 44px -20px rgba(16,24,40
 .delta.up{display:block;text-align:left;padding:0;border:0;gap:0;background:none;border-radius:0;flex-direction:row;align-items:initial}
 .npop{top:calc(92px + env(safe-area-inset-top,0px))}
 .tile img.ill,.upv img.ill{object-fit:contain}
+.tile,.upv{position:relative}.tile img,.upv img{position:absolute;inset:0}
 .npl .nt.un,.npl .nt.un:last-child{border-bottom:1px solid rgba(19,121,91,.2)}
 .delta{font-weight:600;font-size:13px}.delta span{font-weight:400}
+/* ===== v9 clickable stats + revenue report ===== */
+.stat[data-go]{cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}
+.stat[data-go]:hover{border-color:var(--brand)}
+.stat[data-go]:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.srow{display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.spark{width:86px;height:34px;flex:none;overflow:visible}
+.go{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;color:var(--muted);margin-top:6px;padding-top:10px;border-top:1px dashed var(--line);transition:color .15s}
+.stat[data-go]:hover .go{color:var(--brand)}
+.seg{display:inline-flex;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px}
+.seg button{border:0;background:none;padding:7px 18px;border-radius:9px;cursor:pointer;font-weight:600;color:var(--muted);transition:background .15s,color .15s}
+.seg button.on{background:var(--surface);color:var(--brand);box-shadow:var(--sh)}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;font-size:12.5px;font-weight:700}
+.chip.up{background:var(--ok-bg);color:var(--ok)}.chip.down{background:var(--bad-bg);color:var(--bad)}
+.mut{color:var(--muted);font-size:13px}
+.kpi strong{font-size:28px}
+.scw{position:relative}.scw svg{display:block;width:100%;height:auto;overflow:visible}
+.sc-gl{stroke:var(--line);stroke-width:1}.sc-t{fill:var(--muted);font-size:12px}
+.sc-line{fill:none;stroke:var(--brand);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.sc-prev{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:5 6;opacity:.7}
+.sc-guide{stroke:var(--brand);stroke-width:1;stroke-dasharray:3 4;opacity:.6}
+.sc-dot{fill:var(--surface);stroke:var(--brand);stroke-width:3}.sc-dot2{fill:var(--muted)}
+.sc-tt{position:absolute;pointer-events:none;background:#14231c;color:#fff;padding:9px 13px;border-radius:10px;font-size:13px;line-height:1.5;white-space:nowrap;transform:translate(-50%,-125%);box-shadow:0 12px 26px -10px rgba(0,0,0,.45);z-index:3}.sc-tt span{opacity:.75;font-size:12px}
+.lgd{display:flex;gap:16px;color:var(--muted);font-size:13px;flex-wrap:wrap}.lgd span{display:inline-flex;align-items:center;gap:6px}
+.dotc{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}.dotc.dash{background:none;width:16px;height:0;border-radius:0;border-bottom:2px dashed var(--muted)}
+.dwrap{display:flex;gap:22px;align-items:center;flex-wrap:wrap;justify-content:center}
+.dn{width:180px;height:180px;flex:none}.dn-v{font-size:19px;font-weight:700;fill:var(--ink)}.dn-l{font-size:12px;fill:var(--muted)}
+.dl{display:flex;flex-direction:column;gap:13px;flex:1;min-width:190px}.dl>div{display:flex;align-items:center;gap:10px}.dl b{margin-left:auto;font-weight:600}.dl small{color:var(--muted);width:40px;text-align:right}
+.pthumb{width:38px;height:38px;border-radius:10px;overflow:hidden;flex:none;position:relative}.pthumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.shr{display:flex;align-items:center;gap:10px;min-width:130px}.shr .meter{flex:1}.shr span{color:var(--muted);font-size:13px;width:38px;text-align:right}
+.pbar{display:flex;flex-direction:column;gap:7px}.pbar .l{display:flex;justify-content:space-between;gap:8px}.pbar .l span:last-child{color:var(--muted)}
+.pbar .meter{height:8px}.pbar .meter i{background:var(--brand)}
+/* ===== v10 custom dropdowns ===== */
+.sel{position:relative;width:100%;min-width:0}
+.sel-native{display:none!important}
+.sel-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;padding:10px 14px;border:1px solid var(--line);background:var(--surface);border-radius:12px;font:inherit;font-weight:500;color:var(--ink);cursor:pointer;text-align:left;transition:border-color .15s,box-shadow .15s,background .15s}
+.sel-btn:hover{border-color:var(--brand);background:var(--bg)}
+.sel.open .sel-btn,.sel-btn:focus-visible{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft);outline:0;background:var(--surface)}
+.sel-btn.ph .sel-lbl{color:var(--muted);font-weight:400}
+.sel-lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.sel-chev{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s,stroke .2s;flex:none}
+.sel.open .sel-chev{transform:rotate(180deg);stroke:var(--brand)}
+.sel-menu{position:fixed;z-index:120;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 54px -14px rgba(16,24,40,.35);padding:6px;max-height:290px;overflow:auto;animation:dropin .14s ease}
+.sel-opt{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--ink);line-height:1.4;transition:background .1s}
+.sel-opt+.sel-opt{margin-top:2px}
+.sel-opt:hover{background:var(--bg)}
+.sel-opt.act{background:var(--brand-soft)}
+.sel-opt.on{background:var(--brand-soft);color:var(--brand);font-weight:600}
+.sel-ck{width:18px;height:18px;stroke:var(--brand);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+@media(prefers-reduced-motion:reduce){.sel-menu{animation:none}}
 @media(prefers-reduced-motion:reduce){tr.flash td{animation:none;background:var(--brand-soft)}}
 .sl{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}.sl.tot{border:0;font-size:18px;font-weight:700}
 @media(max-width:900px){.sec{grid-template-columns:1fr;gap:14px}.mini{grid-template-columns:1fr}}
@@ -942,7 +992,38 @@ const DICT=`@স=S
 অর্ডারের=Order's
 দিয়ে=with
 সব নোটিফিকেশন দেখুন=View all notifications
-বন্ধ করুন=Close`;
+বন্ধ করুন=Close
+বিক্রি রিপোর্ট=Sales report
+আয়, অর্ডার ও পণ্যের পারফরম্যান্স এক জায়গায়=Revenue, orders and product performance in one place
+@আজ=Today
+৭ দিন=7 days
+৩০ দিন=30 days
+মোট আয়=Total revenue
+গড় অর্ডার মূল্য=Average order value
+বাতিলের হার=Cancellation rate
+আগের সময়ের তুলনায়=vs previous period
+আগের সময়=Previous period
+এই সময়=This period
+আয়ের ট্রেন্ড চার্ট=Revenue trend chart
+আয়ের ট্রেন্ড=Revenue trend
+আজ ঘণ্টা অনুযায়ী=Today, by hour
+গত ৭ দিন=Last 7 days
+গত ৩০ দিন=Last 30 days
+ক্যাটাগরি অনুযায়ী আয়=Revenue by category
+পণ্য অনুযায়ী বিক্রি=Sales by product
+হাইলাইট=Highlights
+সেরা দিন=Best day
+সেরা সময়=Peak hour
+দৈনিক গড়=Daily average
+ঘণ্টায় গড়=Hourly average
+সর্বনিম্ন=Lowest
+@মোট=Total
+@আয়=Revenue
+@অংশ=Share
+বিস্তারিত রিপোর্ট=Detailed report
+বিস্তারিত দেখুন=View details
+অক্টো=Oct
+নভে=Nov`;
 const EX=new Map(),DL=[];
 DICT.split('\n').forEach(l=>{if(!l.trim())return;const i=l.indexOf('=');let k=l.slice(0,i),v=l.slice(i+1);const ex=k[0]=='@';if(ex)k=k.slice(1);k=k.normalize('NFC');if(ex)EX.set(k,v);else DL.push([k,v])});
 DL.sort((a,b)=>b[0].length-a[0].length);
@@ -1089,12 +1170,137 @@ function illSvg(t){
   return svgW(t,`<defs>${lg('w','#c0884a','#9a6330','#6e4219')}</defs><ellipse cx='200' cy='176' rx='96' ry='16' fill='#6a3f17'/>${S.map((s,i)=>`<g transform='translate(${s[0]} ${s[1]}) rotate(${s[2]})'><path d='M-15 4q15-20 30 0q0 12-9 18' fill='none' stroke='${i%2?'#ef8a63':'#e96d49'}' stroke-width='10' stroke-linecap='round'/><path d='M-14 0q14-16 28 0' fill='none' stroke='#f9b497' stroke-width='3' stroke-linecap='round'/><circle cx='-15' cy='4' r='2' fill='#4a2210'/></g>`).join('')}<path d='M104 176q96 34 192 0c0 50-42 68-96 68s-96-18-96-68z' fill='url(#w)'/><path d='M104 176q96 34 192 0' fill='none' stroke='#d9a468' stroke-width='3' opacity='.7'/>`)}
  if(t=='seed')return svgW(t,`<defs>${lg('a','#6a4426','#2f1d0e','#120a04')}${lg('r','#3a3a3a','#161616','#000')}</defs><g transform='translate(104 196)'><g fill='#9cc2ee'>${[0,72,144,216,288].map(a=>`<circle cx='${(14*Math.cos(a*Math.PI/180)).toFixed(1)}' cy='${(14*Math.sin(a*Math.PI/180)).toFixed(1)}' r='10'/>`).join('')}</g><circle r='6' fill='#6f8f4e'/></g><path d='M104 206v34' stroke='#5a8f3c' stroke-width='4' stroke-linecap='round'/><path d='M168 120h64a12 12 0 0 1 12 12v96a14 14 0 0 1-14 14h-60a14 14 0 0 1-14-14v-96a12 12 0 0 1 12-12z' fill='url(#a)'/><rect x='180' y='96' width='40' height='28' rx='5' fill='#1d1d1d'/><path d='M186 98V72a14 14 0 0 1 28 0v26z' fill='url(#r)'/><rect x='170' y='146' width='60' height='64' rx='6' fill='#f7efdd'/><g fill='#1a120a'><ellipse cx='188' cy='164' rx='4' ry='7' transform='rotate(-25 188 164)'/><ellipse cx='200' cy='160' rx='4' ry='7'/><ellipse cx='212' cy='164' rx='4' ry='7' transform='rotate(25 212 164)'/></g><rect x='184' y='186' width='32' height='5' rx='2.5' fill='#1a120a' opacity='.6'/><rect x='190' y='196' width='20' height='4' rx='2' fill='#1a120a' opacity='.35'/><rect x='174' y='130' width='7' height='90' rx='3.5' fill='#fff' opacity='.22'/><rect x='190' y='52' width='6' height='30' rx='3' fill='#fff' opacity='.18'/><g fill='#1a120a'><ellipse cx='286' cy='232' rx='5' ry='3' transform='rotate(-20 286 232)'/><ellipse cx='300' cy='238' rx='4' ry='2.5'/><ellipse cx='312' cy='230' rx='5' ry='3' transform='rotate(25 312 230)'/><ellipse cx='296' cy='224' rx='4' ry='2.5'/></g>`);
  return svgW('box',`<defs>${lg('a','#e2bd88','#cfa066','#b38046')}</defs><rect x='120' y='132' width='160' height='106' rx='6' fill='url(#a)'/><path d='M120 132l22-30h116l22 30z' fill='#d9b27a'/><rect x='190' y='102' width='20' height='136' fill='#25ab7c'/><rect x='190' y='102' width='20' height='136' fill='#fff' opacity='.12'/><path d='M200 102c-34-26-52 6-24 14M200 102c34-26 52 6 24 14' fill='none' stroke='#25ab7c' stroke-width='9' stroke-linecap='round'/><path d='M142 214c10-18 24-22 34-18-4 14-18 22-34 18z' fill='#3e8b3a' opacity='.8'/>`)}
-function pimg(p){return 'data:image/svg+xml;utf8,'+encodeURIComponent(illSvg(ptype(p)))}
+function pimg(p){return 'data:image/svg+xml;utf8,'+encodeURIComponent(illSvg(ptype(p))).replace(/'/g,'%27')}
 function tile(p,c){return `<div class='tile ${c||''}' ${p.img?'':`style='background:${pbg(p)}'`}><img ${p.img?'':`class='ill'`} src='${p.img||pimg(p)}' alt=''></div>`}
 {const _rpd=renderPD;renderPD=function(i){_rpd(i);const p=PL[i],v=document.querySelector('#pd-img .upv');if(p&&v&&!p.img){v.style.background=pbg(p);v.innerHTML=`<img class='ill' src='${pimg(p)}' alt=''>`}}}
 document.addEventListener('click',e=>{const b=e.target.closest('.uprm');if(!b)return;const box=b.closest('.up');setTimeout(()=>{const v=box.querySelector('.upv');const p=box.id=='pd-img'?PL[PDI]:box.id=='np-img'?['','','']:null;if(p&&v){v.style.background=pbg(p);v.innerHTML=`<img class='pop ill' src='${pimg(p)}' alt=''>`}},0)});
 {const _np=newProduct;newProduct=function(){_np();const v=document.querySelector('#np-img .upv');if(v){const p=['','',''];v.style.background=pbg(p);v.innerHTML=`<img class='ill' src='${pimg(p)}' alt=''>`}};document.querySelector('#view-products .bar-t .btn').onclick=newProduct}
 pGrid();
+/* ---- v9: clickable stat cards + revenue report ---- */
+function nice(v){const p=Math.pow(10,Math.floor(Math.log10(v))),m=v/p;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p}
+function spPath(pts){return pts.map((p,i)=>i?`C${(pts[i-1][0]+p[0])/2} ${pts[i-1][1]} ${(pts[i-1][0]+p[0])/2} ${p[1]} ${p[0]} ${p[1]}`:`M${p[0]} ${p[1]}`).join('')}
+function spark(vals,color,k){const w=86,h=34,mx=Math.max(...vals),mn=Math.min(...vals),pts=vals.map((v,i)=>[i*(w/(vals.length-1)),h-3-(v-mn)/(mx-mn||1)*(h-8)]),d=spPath(pts);
+ return `<svg class='spark' viewBox='0 0 ${w} ${h}' aria-hidden='true'><defs><linearGradient id='sk${k}' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${color}' stop-opacity='.3'/><stop offset='1' stop-color='${color}' stop-opacity='0'/></linearGradient></defs><path d='${d}L${w} ${h}L0 ${h}Z' fill='url(#sk${k})'/><path d='${d}' fill='none' stroke='${color}' stroke-width='2' stroke-linecap='round'/><circle cx='${pts[pts.length-1][0]}' cy='${pts[pts.length-1][1]}' r='2.6' fill='${color}'/></svg>`}
+const sm=a=>a.reduce((x,y)=>x+y,0);
+var cf='';
+function cTabs(){const t=$('ct');if(t)t.innerHTML=tabs([['','সব'],['নতুন','নতুন'],['নিয়মিত','নিয়মিত'],['ভিআইপি','ভিআইপি']],cf,k=>k===''?CL.length:CL.filter(c=>c[6]===k).length)}
+function cRows(q){const r=CL.map((c,i)=>[c,i]).filter(([c])=>(!cf||c[6]===cf)&&norm(c.slice(0,3).join(' ')).includes(d2a(q).toLowerCase()));
+ $('cb').innerHTML=r.length?r.map(([c,i])=>`<tr><td><a class='who' href='#customer-${i}'>${avh(c.img,ini(c[0]))}<div>${c[0]}<small>${c[1]}</small></div></a></td><td>${c[2]}</td><td>${bn(c[3])}টি</td><td class='amt'>৳${bn(c[4])}</td><td>${c[5]}</td><td>${ctb(c[6])}</td></tr>`).join(''):`<tr><td colspan='6' class='none'>এই নামে কোনো কাস্টমার নেই।</td></tr>`;cTabs()}
+{const ch=$('cs').closest('.ch');ch.style.flexWrap='wrap';const ct=document.createElement('div');ct.id='ct';ch.insertBefore(ct,ch.lastElementChild);
+ ct.addEventListener('click',e=>{const b=e.target.closest('.tab');if(b){cf=b.dataset.k;cRows(bd(en($('cs').value.trim())))}});cRows('')}
+
+/* stat cards: sparkline + click-through */
+{const cards=[...document.querySelectorAll('#stats .stat')],S=[[29400,33800,38200,31500,42100,44900,48520],[62,70,74,68,81,79,86],[9,11,8,12,10,13,14],[18,15,16,13,14,14,12]],CC=['#13a578','#3b6fe0','#8b5cf6','#e08a0e'];
+ cards.forEach((c,i)=>{const st=c.querySelector('strong'),row=document.createElement('div');row.className='srow';st.replaceWith(row);row.append(st);row.insertAdjacentHTML('beforeend',spark(S[i],CC[i],i));
+  c.insertAdjacentHTML('beforeend',`<span class='go'>বিস্তারিত দেখুন →</span>`);c.dataset.go=i;c.tabIndex=0;c.setAttribute('role','link')});
+ const dl=cards[3].querySelector('.delta');dl.classList.remove('down');dl.classList.add('up')}
+const SGO=[()=>{location.hash='#sales'},()=>gotoOrders(),()=>{cf='নতুন';cRows(bd(en($('cs').value.trim())));location.hash='#customers'},()=>{of='p';oq='';$('os').value='';oTabs();oRows();location.hash='#orders'}];
+$('stats').addEventListener('click',e=>{const c=e.target.closest('.stat[data-go]');if(c)SGO[+c.dataset.go]()});
+$('stats').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const c=e.target.closest('.stat[data-go]');if(c){e.preventDefault();SGO[+c.dataset.go]()}}});
+$('chart').closest('.card').querySelector('.ch').insertAdjacentHTML('beforeend',`<a class='link' href='#sales'>বিস্তারিত রিপোর্ট →</a>`);
+{const nav=document.querySelector('nav'),a=document.createElement('a');a.href='#sales';a.innerHTML=`<svg viewBox='0 0 24 24'><path d='M3 3v18h18'/><path d='m7 15 4-4 3 3 6-7'/></svg>বিক্রি রিপোর্ট`;nav.insertBefore(a,nav.children[4])}
+
+/* revenue report page */
+T2.sales='বিক্রি রিপোর্ট';
+{const m=document.createElement('main');m.className='wrap';m.id='view-sales';m.hidden=true;document.querySelector('.main').appendChild(m)}
+var sr='7',SD=null;
+function sdata(r){const W=[29400,33800,38200,31500,42100,44900,48520],P=[26400,30100,34200,28600,37500,40100,42760],N=['শুক্র','শনি','রবি','সোম','মঙ্গল','বুধ','বৃহ'];let o;
+ if(r=='1'){const c=[1800,2600,3900,4700,5200,4100,3300,3800,4600,5400,4900,2800,1420],p=[1500,2300,3300,4200,4700,4400,3000,3500,4100,4700,4500,2600,1300];
+  o={lab:c.map((_,i)=>bd(String(9+i).padStart(2,'0'))+':০০'),cur:c,prev:p,every:2,title:'আজ ঘণ্টা অনুযায়ী',ord:86,pa:538,can:3.5,pcan:4.1,unit:'ঘণ্টায় গড়',bl:'সেরা সময়'}}
+ else if(r=='7'){o={lab:N,cur:W,prev:P,every:1,title:'গত ৭ দিন',avg:556,pa:541,can:4.1,pcan:4.6,unit:'দৈনিক গড়',bl:'সেরা দিন'}}
+ else{const c=[],p=[];for(let i=0;i<23;i++)c.push(Math.round(25800+i*470+[0,2100,3600,-1500,3900,4800,900][i%7]+((i*37)%5)*180));W.forEach(v=>c.push(v));c.forEach((v,i)=>p.push(Math.round(v*(0.84+0.06*Math.abs(Math.sin(i*1.3))))));
+  o={lab:c.map((_,i)=>{let d=26-(29-i),m='নভে';if(d<=0){d+=31;m='অক্টো'}return bd(String(d))+' '+m}),cur:c,prev:p,every:5,title:'গত ৩০ দিন',avg:548,pa:536,can:4.4,pcan:4.9,unit:'দৈনিক গড়',bl:'সেরা দিন'}}
+ o.rev=sm(o.cur);o.prv=sm(o.prev);if(!o.ord)o.ord=Math.round(o.rev/o.avg);o.pord=Math.round(o.prv/o.pa);return o}
+function drawChart(){const w=$('sc-wrap');if(!w||!SD)return;
+ const W=Math.max(300,Math.round(w.clientWidth)),H=W<520?240:300,L=W<520?44:54,R=14,T=16,B=32,{lab,cur,prev,every}=SD,n=cur.length,tmax=nice(Math.max(...cur,...prev)*1.08);
+ const X=i=>L+i*(W-L-R)/(n-1),Y=v=>T+(1-v/tmax)*(H-T-B),pc=cur.map((v,i)=>[X(i),Y(v)]),pp=prev.map((v,i)=>[X(i),Y(v)]),lc=spPath(pc);
+ const grid=[0,1,2,3,4].map(k=>{const v=tmax*k/4,y=Y(v);return `<line class='sc-gl' x1='${L}' x2='${W-R}' y1='${y}' y2='${y}'/><text class='sc-t' x='${L-8}' y='${y+4}' text-anchor='end'>${k?'৳'+bn(+(v/1000).toFixed(2))+'K':'০'}</text>`}).join('');
+ const xl=lab.map((l,i)=>i%every==0?`<text class='sc-t' x='${X(i)}' y='${H-8}' text-anchor='middle'>${l}</text>`:'').join('');
+ w.innerHTML=`<svg id='sc' viewBox='0 0 ${W} ${H}' width='${W}' height='${H}' role='img' aria-label='আয়ের ট্রেন্ড চার্ট'><defs><linearGradient id='ar' x1='0' y1='0' x2='0' y2='1'><stop offset='0' style='stop-color:var(--brand);stop-opacity:.3'/><stop offset='1' style='stop-color:var(--brand);stop-opacity:0'/></linearGradient></defs>${grid}${xl}<path d='${lc}L${X(n-1)} ${Y(0)}L${X(0)} ${Y(0)}Z' fill='url(#ar)'/><path class='sc-prev' d='${spPath(pp)}'/><path class='sc-line' d='${lc}'/><line id='sc-g' class='sc-guide' y1='${T}' y2='${Y(0)}' hidden/><circle id='sc-d2' r='4' class='sc-dot2' hidden/><circle id='sc-d' r='5' class='sc-dot' cx='${pc[n-1][0]}' cy='${pc[n-1][1]}'/></svg><div id='sc-tt' class='sc-tt' hidden></div>`;
+ const svg=$('sc'),tt=$('sc-tt'),g=$('sc-g'),d=$('sc-d'),d2=$('sc-d2');
+ function show(cx){const r=svg.getBoundingClientRect(),k=r.width/W;let i=Math.round(((cx-r.left)/k-L)/((W-L-R)/(n-1)));i=Math.max(0,Math.min(n-1,i));
+  g.setAttribute('x1',X(i));g.setAttribute('x2',X(i));g.hidden=false;d.setAttribute('cx',X(i));d.setAttribute('cy',Y(cur[i]));d2.setAttribute('cx',X(i));d2.setAttribute('cy',Y(prev[i]));d2.hidden=false;
+  tt.innerHTML=`<b>${lab[i]}</b><br>৳${bn(cur[i])}<br><span>আগের সময়: ৳${bn(prev[i])}</span>`;tt.hidden=false;tt.style.left=Math.min(Math.max(X(i)*k,60),r.width-60)+'px';tt.style.top=Y(cur[i])*k+'px'}
+ svg.addEventListener('mousemove',e=>show(e.clientX));svg.addEventListener('touchmove',e=>show(e.touches[0].clientX),{passive:true});svg.addEventListener('touchstart',e=>show(e.touches[0].clientX),{passive:true});
+ svg.addEventListener('mouseleave',()=>{tt.hidden=true;g.hidden=true;d2.hidden=true;d.setAttribute('cx',pc[n-1][0]);d.setAttribute('cy',pc[n-1][1])})}
+function donut(parts,total){const R=62,C=2*Math.PI*R;let off=0;
+ return `<svg viewBox='0 0 180 180' class='dn' role='img'><circle cx='90' cy='90' r='${R}' fill='none' style='stroke:var(--bg)' stroke-width='22'/>${parts.map(p=>{const len=Math.max(0,C*p.v/100-3),o=off;off+=C*p.v/100;return `<circle class='dseg' cx='90' cy='90' r='${R}' fill='none' stroke='${p.c}' stroke-width='22' data-len='${len}' data-c='${C}' stroke-dasharray='0 ${C}' stroke-dashoffset='${-o}' transform='rotate(-90 90 90)'/>`}).join('')}<text x='90' y='88' text-anchor='middle' class='dn-v'>৳${bn(Math.round(total/1000))}K</text><text x='90' y='108' text-anchor='middle' class='dn-l'>মোট</text></svg>`}
+function renderSales(){const o=sdata(sr);SD=o;const {lab,cur,rev,prv,ord,pord}=o,n=cur.length,aov=Math.round(rev/ord),paov=Math.round(prv/o.pord);
+ const chip=(d,good)=>{const up=d>=0;return `<span class='chip ${up===good?'up':'down'}'>${up?'▲':'▼'} ${bn(+Math.abs(d).toFixed(1))}%</span>`};
+ const K=[['মোট আয়','৳'+bn(rev),chip((rev/prv-1)*100,true)],['মোট অর্ডার',bn(ord),chip((ord/pord-1)*100,true)],['গড় অর্ডার মূল্য','৳'+bn(aov),chip((aov/paov-1)*100,true)],['বাতিলের হার',bn(o.can)+'%',chip(o.can-o.pcan,false)]];
+ const CAT=[['মধু',34,'#13795b'],['ঘি ও তেল',29,'#3b6fe0'],['গুড় ও আচার',22,'#e08a0e'],['অন্যান্য',15,'#8b5cf6']],PAY=[['বিকাশ',46,'#e2136e'],['ক্যাশ অন ডেলিভারি',30,'#64748b'],['নগদ',24,'#f6821f']],W6=[.27,.2,.16,.13,.11,.08];
+ const mx=Math.max(...cur),mn=Math.min(...cur),bi=cur.indexOf(mx),li=cur.indexOf(mn);
+ $('view-sales').innerHTML=hd('বিক্রি রিপোর্ট','আয়, অর্ডার ও পণ্যের পারফরম্যান্স এক জায়গায়',`<div class='seg' id='seg'>${[['1','আজ'],['7','৭ দিন'],['30','৩০ দিন']].map(a=>`<button type='button' data-r='${a[0]}' class='${a[0]==sr?'on':''}'>${a[1]}</button>`).join('')}</div>`)+
+ `<section class='stats'>${K.map(k=>`<div class='card stat kpi'><div class='row'>${k[0]}</div><strong>${k[1]}</strong><div>${k[2]} <span class='mut'>আগের সময়ের তুলনায়</span></div></div>`).join('')}</section>`+
+ `<section class='grid'><div class='card'><div class='ch'><div><h2>আয়ের ট্রেন্ড</h2><small>${o.title}</small></div><div class='lgd'><span><i class='dotc' style='background:var(--brand)'></i>এই সময়</span><span><i class='dotc dash'></i>আগের সময়</span></div></div><div id='sc-wrap' class='scw'></div></div>`+
+ `<div class='card'><div class='ch'><h2>ক্যাটাগরি অনুযায়ী আয়</h2></div><div class='dwrap'>${donut(CAT.map(c=>({v:c[1],c:c[2]})),rev)}<div class='dl'>${CAT.map(c=>`<div><i class='dotc' style='background:${c[2]}'></i><span>${c[0]}</span><b>৳${bn(Math.round(rev*c[1]/100))}</b><small>${bn(c[1])}%</small></div>`).join('')}</div></div></div></section>`+
+ `<section class='grid'><div class='card'><div class='ch'><h2>পণ্য অনুযায়ী বিক্রি</h2></div><div class='tw'><table><thead><tr><th>প্রোডাক্ট</th><th>পরিমাণ</th><th>আয়</th><th>অংশ</th></tr></thead><tbody>${PL.slice(0,6).map((p,i)=>{const rv=Math.round(rev*W6[i]);return `<tr><td><div class='who'><span class='pthumb' style='background:${pbg(p)}'><img src='${p.img||pimg(p)}' alt=''></span><div>${p[1]}<small>${p[2]}</small></div></div></td><td>${bn(Math.round(rv/p[3]))}</td><td class='amt'>৳${bn(rv)}</td><td><div class='shr'><div class='meter'><i style='width:${W6[i]/.27*100}%;background:var(--brand)'></i></div><span>${bn(Math.round(W6[i]*100))}%</span></div></td></tr>`}).join('')}</tbody></table></div></div>`+
+ `<div class='cstack'><div class='card'><div class='ch'><h2>পেমেন্ট মাধ্যম</h2></div><div style='display:flex;flex-direction:column;gap:16px'>${PAY.map(p=>`<div class='pbar'><div class='l'><span>${p[0]}</span><span>৳${bn(Math.round(rev*p[1]/100))} · ${bn(p[1])}%</span></div><div class='meter'><i style='width:${p[1]}%;background:${p[2]}'></i></div></div>`).join('')}</div></div>`+
+ `<div class='card'><div class='ch'><h2>হাইলাইট</h2></div>${kv(o.bl,lab[bi]+' · ৳'+bn(mx))}${kv(o.unit,'৳'+bn(Math.round(rev/n)))}${kv('সর্বনিম্ন',lab[li]+' · ৳'+bn(mn))}</div></div></section>`;
+ drawChart();requestAnimationFrame(()=>document.querySelectorAll('.dseg').forEach(c=>{c.style.transition='stroke-dasharray .9s cubic-bezier(.2,.8,.2,1)';c.setAttribute('stroke-dasharray',c.dataset.len+' '+c.dataset.c)}))}
+$('view-sales').addEventListener('click',e=>{const b=e.target.closest('#seg button');if(b){sr=b.dataset.r;renderSales()}});
+addEventListener('resize',()=>{if(!$('view-sales').hidden)drawChart()});
+
+/* router v5 */
+function route(){let h=location.hash.slice(1)||'dashboard',main=h;const mp=h.match(/^product-([0-9]+)$/),mc=h.match(/^customer-([0-9]+)$/);
+ if(mp)main='product';else if(mc)main='customer';else if(!V.includes(h)&&!['new-order','profile','notifications','sales'].includes(h))main=h='dashboard';
+ ['dashboard','orders','products','customers','settings','new-order','product','profile','customer','notifications','sales'].forEach(v=>$('view-'+v).hidden=v!==main);
+ const nv=main==='new-order'?'orders':main==='product'?'products':main==='customer'?'customers':main;
+ document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+nv));
+ if(main==='new-order'){NR=NR0||[{p:'',q:1}];NR0=null;renderNO()}
+ if(main==='product')renderPD(+mp[1]);
+ if(main==='customer'){CE=false;renderCust(+mc[1])}
+ if(main==='profile')renderProfile();
+ if(main==='notifications')renderNotif();
+ if(main==='sales')renderSales();
+ $('dk').checked=isDark();document.title=T2[main]+' – সুন্দরবন অর্গানিক';tog(false);scrollTo(0,0)}
+/* ---- v10: custom dropdowns for every select + area combo ---- */
+var SELCLOSE=null;
+function closeMenu(){if(SELCLOSE){const f=SELCLOSE;SELCLOSE=null;f()}}
+const CHK=`<svg class='sel-ck' viewBox='0 0 24 24'><path d='m5 12 5 5 9-10'/></svg>`,CHEV=`<svg class='sel-chev' viewBox='0 0 24 24'><path d='m6 9 6 6 6-6'/></svg>`;
+function menuOpen(anchor,items,cur,pick,opts){closeMenu();
+ const r=anchor.getBoundingClientRect(),m=document.createElement('div');m.className='sel-menu';m.setAttribute('role','listbox');
+ let act=Math.max(0,items.findIndex(x=>x.v===cur));const kb=opts&&opts.kb;
+ m.innerHTML=items.map((x,i)=>`<div class='sel-opt${x.v===cur?' on':''}${kb&&i===act?' act':''}' role='option' data-i='${i}'><span class='sel-ot'></span>${x.v===cur?CHK:''}</div>`).join('');
+ [...m.children].forEach((d,i)=>{d.firstElementChild.textContent=items[i].t});
+ const wd=Math.max(r.width,220);m.style.width=wd+'px';m.style.left=Math.max(8,Math.min(r.left,innerWidth-wd-8))+'px';m.style.top=(r.bottom+6)+'px';
+ document.body.appendChild(m);
+ const h=m.offsetHeight;if(r.bottom+6+h>innerHeight-8){if(r.top>h+14)m.style.top=(r.top-6-h)+'px';else m.style.maxHeight=Math.max(120,innerHeight-r.bottom-20)+'px'}
+ const on=m.querySelector('.on');if(on)m.scrollTop=Math.max(0,on.offsetTop-m.clientHeight/2);
+ const move=d=>{const o=[...m.children];if(!o.length)return;if(o[act])o[act].classList.remove('act');act=(act+d+o.length)%o.length;const e=o[act];e.classList.add('act');if(e.offsetTop<m.scrollTop)m.scrollTop=e.offsetTop-6;else if(e.offsetTop+e.offsetHeight>m.scrollTop+m.clientHeight)m.scrollTop=e.offsetTop+e.offsetHeight-m.clientHeight+6};
+ m.addEventListener('mousedown',e=>e.preventDefault());
+ m.addEventListener('click',e=>{const d=e.target.closest('.sel-opt');if(d){const it=items[+d.dataset.i];closeMenu();pick(it)}});
+ SELCLOSE=()=>{m.remove();if(opts&&opts.onClose)opts.onClose()};
+ return {move,choose(){const it=items[act];if(it){closeMenu();pick(it)}}}}
+document.addEventListener('mousedown',e=>{if(SELCLOSE&&!e.target.closest('.sel-menu,.sel,[data-combo]'))closeMenu()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+addEventListener('resize',closeMenu);
+addEventListener('scroll',e=>{if(SELCLOSE&&!(e.target.closest&&e.target.closest('.sel-menu')))closeMenu()},true);
+function enhSel(s){if(s._e)return;s._e=1;
+ const w=document.createElement('div');w.className='sel';s.parentNode.insertBefore(w,s);
+ const b=document.createElement('button');b.type='button';b.className='sel-btn';b.setAttribute('aria-haspopup','listbox');b.setAttribute('aria-expanded','false');b.innerHTML=`<span class='sel-lbl'></span>${CHEV}`;
+ w.append(b,s);s.classList.add('sel-native');s.tabIndex=-1;
+ const lbl=b.firstChild,d=Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value');
+ const upd=()=>{const o=s.options[s.selectedIndex];lbl.textContent=o?o.textContent:'';b.classList.toggle('ph',!!o&&o.value==='')};
+ s._u=upd;Object.defineProperty(s,'value',{get(){return d.get.call(this)},set(v){d.set.call(this,v);upd()},configurable:true});
+ let api=null;
+ const open=kb=>{const items=[...s.options].map(o=>({t:o.textContent,v:o.value}));w.classList.add('open');b.setAttribute('aria-expanded','true');
+  api=menuOpen(b,items,s.value,it=>{d.set.call(s,it.v);upd();s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));b.focus()},{kb,onClose:()=>{w.classList.remove('open');b.setAttribute('aria-expanded','false');api=null}})};
+ b.onclick=()=>{if(w.classList.contains('open'))closeMenu();else open(false)};
+ b.onkeydown=e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!api)open(true);else api.move(e.key==='ArrowDown'?1:-1)}else if((e.key==='Enter'||e.key===' ')&&api){e.preventDefault();api.choose()}else if(e.key==='Tab')closeMenu()};
+ upd()}
+function enhCombo(i){if(i._c)return;const L=document.getElementById(i.getAttribute('list'));if(!L)return;i._c=1;
+ const all=[...L.options].map(o=>o.value);i.removeAttribute('list');i.autocomplete='off';i.dataset.combo='1';
+ let api=null;
+ const show=kb=>{const q=norm(i.value.trim());let items=all.filter(v=>!q||norm(v).includes(q)).map(v=>({t:v,v}));if(items.length==1&&items[0].v===i.value)items=all.map(v=>({t:v,v}));
+  if(!items.length){closeMenu();return}api=menuOpen(i,items,i.value,it=>{i.value=it.v;i.dispatchEvent(new Event('input',{bubbles:true}))},{kb})};
+ i.addEventListener('focus',()=>show(false));i.addEventListener('click',()=>show(false));
+ i.addEventListener('input',e=>{if(e.isTrusted)show(false)});
+ i.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!SELCLOSE)show(true);else if(api)api.move(e.key==='ArrowDown'?1:-1)}else if(e.key==='Enter'&&SELCLOSE&&api){e.preventDefault();api.choose()}else if(e.key==='Tab')closeMenu()})}
+const enhAll=r=>{if(r.nodeType!==1)return;if(r.tagName==='SELECT')enhSel(r);r.querySelectorAll('select').forEach(enhSel);r.querySelectorAll('input[list]').forEach(enhCombo)};
+enhAll(document.body);
+new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(enhAll))).observe(document.body,{childList:true,subtree:true});
+lb.addEventListener('click',()=>setTimeout(()=>document.querySelectorAll('select').forEach(s=>{if(s._u)s._u()}),80));
 I18N_READY=true;
 addEventListener('hashchange',route);route();
 setLang((()=>{try{return localStorage.getItem('lang')==='en'?'en':'bn'}catch(e){return 'bn'}})());
